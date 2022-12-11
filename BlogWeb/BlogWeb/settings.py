@@ -73,12 +73,30 @@ WSGI_APPLICATION = 'BlogWeb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}"""
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'mssql', 
+        'NAME': "blogweb",
+        "USER": "sa",
+        "PASSWORD": "sa",
+        "HOST": "DESKTOP-86HM870\\SQLEXPRESS",
+        "OPTIONS": {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    },
 }
+
+
 
 
 # Password validation
