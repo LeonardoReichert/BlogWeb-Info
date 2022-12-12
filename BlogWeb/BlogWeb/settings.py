@@ -95,13 +95,15 @@ def leerCredenciales():
         if linea.startswith("#"):
             #comentario
             continue
-
+        
         elif not linea or not "=" in linea:
             break
 
         nombreVar, valorVar = linea.split("=")
         credenciales[nombreVar] = valorVar
-    
+
+    archivo.close()
+
     return credenciales
 
 

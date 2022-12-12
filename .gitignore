@@ -4,4 +4,5 @@
 *.sql
 
 *.pyc
-*/__pycache__/
+/__pycache__/
+credencialesDB.txt
