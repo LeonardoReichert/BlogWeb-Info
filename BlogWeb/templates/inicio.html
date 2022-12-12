@@ -13,10 +13,19 @@
 <body>
 
     
-
-
     <p>Proyecto inicial</p>
-    
+    <!--! arreglar error user no existe como tag
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}"> Cerrar sesion</a>
+
+    {% else %}
+        <a href="{% url 'login' %}"> Iniciar sesion</a>
+        <a href="{% url 'register' %}"> Registrarse</a>
+
+    {% endif %}
+    -->
+
 
 
 

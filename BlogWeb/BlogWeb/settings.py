@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 
 # redefinir usuario de django:
 AUTH_USER_MODEL = "usuarios.Usuario"
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login/"
 
 # Application definition:
 INSTALLED_APPS = [
@@ -108,6 +110,7 @@ def leerCredenciales():
 
 
 credenciales = leerCredenciales()
+driverdb = credenciales.pop("driver", 'ODBC Driver 17 for SQL Server')
 
 DATABASES = {
     'default': {
@@ -120,7 +123,7 @@ DATABASES = {
 #NOTA! cambiar la informacion de la bases de datos en credencialesDB.txt
         **credenciales,
         "OPTIONS": {
-            'driver': 'ODBC Driver 17 for SQL Server',
+            'driver':  driverdb,
         },
     },
 }

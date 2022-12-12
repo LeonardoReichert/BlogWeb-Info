@@ -4,3 +4,5 @@ NAME=blogweb
 USER=sa
 PASSWORD=sa
 HOST=DESKTOP-86HM870\SQLEXPRESS
+driver=ODBC Driver 17 for SQL Server
+#fin
