@@ -28,8 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# redefinir usuario de django:
+AUTH_USER_MODEL = "usuarios.Usuario"
 
+# Application definition:
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "usuarios",
 ]
 
 MIDDLEWARE = [
@@ -82,14 +85,38 @@ DATABASES = {
 }"""
 
 
+def leerCredenciales():
+
+    archivo = open("credencialesDB.txt", "r")
+
+    credenciales = {}
+    while True:
+        linea = archivo.readline().removeprefix(" ").removesuffix("\n").removesuffix("\r").replace(" = ", "=")
+        if linea.startswith("#"):
+            #comentario
+            continue
+
+        elif not linea or not "=" in linea:
+            break
+
+        nombreVar, valorVar = linea.split("=")
+        credenciales[nombreVar] = valorVar
+    
+    return credenciales
+
+
+credenciales = leerCredenciales()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql', 
-        'NAME': "blogweb",
-        "USER": "sa",
-        "PASSWORD": "sa",
-        "HOST": "DESKTOP-86HM870\\SQLEXPRESS",
+        #'ENGINE': 'mssql', 
+        #'NAME': "blogweb",
+        #"USER": "sa",
+        #"PASSWORD": "sa",
+        #"HOST": "DESKTOP-86HM870\\SQLEXPRESS",
+        
+#NOTA! cambiar la informacion de la bases de datos en credenciales.txt
+        **credenciales,
         "OPTIONS": {
             'driver': 'ODBC Driver 17 for SQL Server',
         },
