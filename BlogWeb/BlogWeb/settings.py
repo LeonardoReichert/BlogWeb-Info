@@ -117,7 +117,7 @@ DATABASES = {
         #"PASSWORD": "sa",
         #"HOST": "DESKTOP-86HM870\\SQLEXPRESS",
         
-#NOTA! cambiar la informacion de la bases de datos en credenciales.txt
+#NOTA! cambiar la informacion de la bases de datos en credencialesDB.txt
         **credenciales,
         "OPTIONS": {
             'driver': 'ODBC Driver 17 for SQL Server',
