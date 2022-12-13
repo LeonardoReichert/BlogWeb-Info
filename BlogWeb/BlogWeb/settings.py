@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # redefinir usuario de django:
 AUTH_USER_MODEL = "usuarios.Usuario"
 LOGIN_REDIRECT_URL = "/"
-LOGIN_URL = "/login/"
+LOGIN_URL = "/" #cuando se desloguea
 
 # Application definition:
 INSTALLED_APPS = [
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "usuarios",
+    "noticias",
 ]
 
 MIDDLEWARE = [

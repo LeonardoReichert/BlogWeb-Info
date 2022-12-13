@@ -6,7 +6,7 @@
 *.pyc
 /__pycache__/
 __pycache__/
-
+/migrations/
 
 credencialesDB.txt
 #el comando: hace que se ignoren solo los cambios futuros en un archivo ya pusheado:

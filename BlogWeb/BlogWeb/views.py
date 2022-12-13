@@ -12,6 +12,15 @@ def inicio(request):
     return render(request, "inicio.html", contexto);
 
 
+def registro(request):
+
+    #parametros a la web template
+    contexto = {};
+
+    return render(request, "registro.html", contexto);
+
+
+
 """
 def login(request):
     contexto = {};
