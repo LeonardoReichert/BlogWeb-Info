@@ -18,7 +18,7 @@
     
     <div align="center"><p>Mi bella ciudad</p></div>
 
-    
+
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -39,6 +39,7 @@
             <a href="{% url 'logout' %}">
                 <button type="button" class="btn btn-primary">Cerrar sesion</button>
             </a>
+            <p>Bienvenido {{user.username}}</p>
     
          {% else %}
             <a href="{% url 'login' %}">
@@ -52,28 +53,35 @@
         </div>
     </nav>
 
+    
+    {% block general %}
 
-
-
-    <!-- definir bloque noticias-->
-    <div align="center"><h1>Ultimas noticias</h1></div>
-    {% for i in "12345" %}
-    <!-- noticia : -->
-    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" align="left">
-        <div class="col-auto d-none d-lg-block">
-            <img src="https://www.gravatar.com/avatar/a6dcc45346a0cb642c8e3c7d7161963b?s=256&d=identicon&r=PG" alt="Thumbnail" srcset="" width="250" height="250">
+        <!-- definir bloque noticias-->
+        <div align="center"><h1>Ultimas noticias</h1>
+            {% if user.esAdmin %}
+                <a href="{% url 'crearnoticia' %}"> admin : Crear noticia </a>
+            {% endif %}
         </div>
+        {% for i in "12345" %}
+        <!-- noticia : -->
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" align="left">
+            <div class="col-auto d-none d-lg-block">
+                <img src="https://www.gravatar.com/avatar/a6dcc45346a0cb642c8e3c7d7161963b?s=256&d=identicon&r=PG" alt="Thumbnail" srcset="" width="250" height="250">
+            </div>
 
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">World</strong>
-          <h3 class="mb-0">Featured post</h3>
-          <div class="mb-1 text-muted">Nov 12</div>
-          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="stretched-link">Continue reading</a>
+            <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary">World</strong>
+            <h3 class="mb-0">Featured post</h3>
+            <div class="mb-1 text-muted">Nov 12</div>
+            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="stretched-link">Continue reading</a>
+            </div>
+            
         </div>
+        {% endfor %}
+
         
-      </div>
-      {% endfor %}
+    {% endblock %}
 
 
 

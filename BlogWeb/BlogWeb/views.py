@@ -20,6 +20,15 @@ def registro(request):
     return render(request, "registro.html", contexto);
 
 
+def crearNoticia(request):
+
+    #parametros a la web template
+    contexto = {};
+
+    return render(request, "crearnoticia.html", contexto);
+
+
+
 
 """
 def login(request):

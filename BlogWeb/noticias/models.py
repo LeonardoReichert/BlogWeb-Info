@@ -10,7 +10,7 @@ class Categorias(models.Model):
 
 class Noticia(models.Model):
     titulo = models.CharField(max_length=200);
-    #detalles = models.CharField(max_length=200);
+    #detalles = models.CharField(max_length=200); #obviado
     fecha = models.DateTimeField(auto_now=True);
     autor = models.ForeignKey(Usuario, on_delete=models.CASCADE);
     categoria = models.ForeignKey(Categorias, null=True, on_delete=models.SET_NULL);
@@ -19,8 +19,9 @@ class Noticia(models.Model):
 
 class NoticiaParte(models.Model):
     noticia = models.ForeignKey(Noticia, on_delete=models.CASCADE);
-    mensaje = models.TextField();
+    mensaje = models.TextField(max_length=10000);
     urlImagen = models.CharField(max_length=250, null=True);
+    #la primera parte debe tener una imagen
 
 
 class Comentario(models.Model):

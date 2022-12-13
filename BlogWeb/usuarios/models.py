@@ -7,3 +7,4 @@ class Usuario(AbstractUser):
     esAdmin = models.BooleanField(default=False)
     fechaNac = models.DateField(default=None, null=True)
     #username = models.CharField(default=None, null=True)
+
