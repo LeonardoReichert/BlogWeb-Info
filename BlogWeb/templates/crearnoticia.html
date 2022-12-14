@@ -11,44 +11,70 @@
     {% endif %}
     </center>
 
-    <div align="left">
-    <h5>Titulo:</5> <br>
-    <input type="text" name="titulo_noticia"  size="90" value="{{oldTitulo}}">
-    </div>
+    <form method="post">
+        {% csrf_token %}
 
-    <div align="left">
-    <h5>Cuerpo:</5> <br>
-    <textarea name="" id="" cols="100" rows="10" maxlength="10000">{{oldCuerpoNoticia}}</textarea>
-    </div>
+        <input type="hidden" name="modnoticia" id="modnoticia" value="{{modnoticia}}">
+
+        <div align="left">
+        <h5>Titulo:</5> <br>
+        <input type="text" name="titulo_noticia"  size="90" value="{{oldTitulo}}">
+        </div>
+
+        <!-- mostrar poner imagen cuando se halla implementado -->
+        <div align="left">
+            <!-- <h5>Imagen:</5> <br> -->
+            <input type="hidden" name="img_part1" size="90" value="">
+        </div>
+
+        <div align="left">
+        <h5>Cuerpo:</5> <br>
+        <textarea name="body_part1" id="body_part1" cols="100" rows="15" maxlength="10000">{{oldCuerpoNoticia}}</textarea>
+        (Max 10000 caracteres.)
+        </div>
 
 
-    <div align="left">
-    <h5>Categoria:</5> <br>
-    <select name="categoria", id="categoria" onchange="selectCategoria()">
-        {% if oldCategoria %}
-            <optgroup label="Actual">
-            <option value="{{oldCategoria.id}}" selected>{{oldCategoria.nombre}}</option>
-            </optgroup>
-        {% else %}
-            <option value="" selected>Seleccionar</option>
-        {% endif %}
-        <optgroup label="Otras categorias">
-        {% for categoria in categoriasExistentes %}
-            {% if categoria != oldCategoria %}
-                <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+        <div align="left">
+        <h5>Categoria:</5> <br>
+        <select name="categoria", id="categoria" onchange="selectCategoria()">
+            {% if oldCategoria %}
+                <optgroup label="Actual">
+                <option value="{{oldCategoria.id}}" selected>{{oldCategoria.nombre}}</option>
+                </optgroup>
+            {% else %}
+                <option value="" selected>Seleccionar</option>
             {% endif %}
-        {% endfor %}
-        </optgroup>
+            <optgroup label="Otras categorias">
+            {% for categoria in categoriasExistentes %}
+                {% if categoria != oldCategoria %}
+                <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+                {% endif %}
+            {% endfor %}
+            </optgroup>
 
-        <optgroup label="Crear">
-        <option value="+">Crear nueva categoria</option>
-        </optgroup>
-    </select>
+            <optgroup label="Crear">
+            <option value="+">Crear nueva categoria</option>
+            </optgroup>
+        </select>
 
-    <input type="hidden" name="nueva_categoria" id="nueva_categoria" size="30" maxlenght=30 value=""
-            placeholder="Nueva categoria aqui...">
-    
-    </div>
+        <input type="hidden" name="nueva_categoria" id="nueva_categoria" size="30" maxlenght=30 value=""
+                placeholder="Nueva categoria aqui...">
+        
+        </div>
+
+        <center>
+            <button type="submit">
+                {% if not modnoticia %}
+                    Crear noticia
+                {% else %}
+                    Guardar cambios
+                {% endif %}
+            </button>
+        </center>
+
+    </form>
+
+    <br><br><br><br>
 
     <script>
         // usado para cuando el usuario elige crear nueva categoria
