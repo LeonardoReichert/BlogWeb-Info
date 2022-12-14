@@ -42,7 +42,7 @@ def crearNoticia(request):
         tituloNoticia = noticia.titulo;
         categoria = noticia.categoria;
 
-        partes = NoticiaParte.objects.filter(noticia=int(idNoticia));
+        partes = NoticiaParte.objects.filter(noticia=noticia);
 
         #por ahora las noticias se limitaran a un solo cuerpo o parte
         cuerpoNoticia = partes[0].mensaje;
@@ -55,7 +55,6 @@ def crearNoticia(request):
 
     categoriasExistentes = Categorias.objects.all()
     
-
     #parametros a la web template
     contexto = {"modnoticia": idNoticia,
                 "oldTitulo": tituloNoticia,

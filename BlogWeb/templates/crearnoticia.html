@@ -3,7 +3,6 @@
 
 {% block general %}
 
-
     <center>
     {% if not modnoticia %}
         <h2>Crear Noticia</h2>
@@ -25,22 +24,45 @@
 
     <div align="left">
     <h5>Categoria:</5> <br>
-    <select name="categorias", id="categorias">
+    <select name="categoria", id="categoria" onchange="selectCategoria()">
         {% if oldCategoria %}
+            <optgroup label="Actual">
             <option value="{{oldCategoria.id}}" selected>{{oldCategoria.nombre}}</option>
+            </optgroup>
         {% else %}
             <option value="" selected>Seleccionar</option>
         {% endif %}
-        
+        <optgroup label="Otras categorias">
         {% for categoria in categoriasExistentes %}
             {% if categoria != oldCategoria %}
                 <option value="{{categoria.id}}">{{categoria.nombre}}</option>
             {% endif %}
         {% endfor %}
+        </optgroup>
 
+        <optgroup label="Crear">
         <option value="+">Crear nueva categoria</option>
+        </optgroup>
     </select>
+
+    <input type="hidden" name="nueva_categoria" id="nueva_categoria" size="30" maxlenght=30 value=""
+            placeholder="Nueva categoria aqui...">
+    
     </div>
 
+    <script>
+        // usado para cuando el usuario elige crear nueva categoria
+        function selectCategoria(){
+          var valCategoria = document.getElementById("categoria").value;
+          var inputCategoria = document.getElementById("nueva_categoria");
+          if (valCategoria == "+"){
+            inputCategoria.type="text";
+            }
+          else{
+            inputCategoria.type="hidden";
+            inputCategoria.value="";
+            }
+        }
+    </script>
 
 {% endblock %}
