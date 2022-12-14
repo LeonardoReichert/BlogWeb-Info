@@ -78,7 +78,7 @@ def crearNoticia(request):
 
         imgPost1 = request.POST.get("img_part1", "");
         #if not imgPost1:
-        # futuramente los posts deberan tener almenos 1 imagen
+        # modificar futuramente los posts deberan tener almenos 1 imagen
 
         #tanto en la creacion como en la modificacion se puede crear una categoria
         idCategoria = request.POST.get("categoria", "");
@@ -89,7 +89,7 @@ def crearNoticia(request):
             #categoria = None
             if nombreNuevaCategoria:
                 #categoria son valores unicos, si no existe se crea
-                categoria, created = Categorias.objects.get_or_create(nombre=nombreNuevaCategoria)
+                categoria, created = Categorias.objects.get_or_create(nombre=nombreNuevaCategoria);
         else:
             try:
                 categoria = Categorias.objects.get(id=idCategoria);
@@ -109,12 +109,21 @@ def crearNoticia(request):
                                              autor=request.user,
                                              categoria=categoria);
             
-            NoticiaParte.objects.create(noticia=noticia, mensaje=mensajePost1, urlImagen=imgPost1)
+            NoticiaParte.objects.create(noticia=noticia, mensaje=mensajePost1, urlImagen=imgPost1);
 
             idPostNoticia = noticia.id;
         else:
             #se modifica porque se especifica el ID en al peticion POST
-            pass
+            noticia = Noticia.objects.get(id=idPostNoticia);
+            noticia.titulo = tituloPost;
+            noticia.categoria = categoria;
+            noticia.save();
+
+            parte1 = NoticiaParte.objects.get(noticia = noticia);
+            parte1.mensaje = mensajePost1;
+            parte1.urlImagen = imgPost1;
+            parte1.save();
+
             
         print("post", request.POST)
 
