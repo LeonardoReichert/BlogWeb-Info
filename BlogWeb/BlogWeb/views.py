@@ -14,7 +14,6 @@ def inicio(request):
     print("cantidad noticias: ", totalNoticias)
 
 
-
     #parametros a la web template
     contexto = {};
 
@@ -41,21 +40,31 @@ def crearNoticia(request):
         noticia = Noticia.objects.get(pk=int(idNoticia));
 
         tituloNoticia = noticia.titulo;
-        nombreCategoria = noticia.categoria.nombre;
+        categoria = noticia.categoria;
 
         partes = NoticiaParte.objects.filter(noticia=int(idNoticia));
+
+        #por ahora las noticias se limitaran a un solo cuerpo o parte
         cuerpoNoticia = partes[0].mensaje;
+
     except:
         tituloNoticia = ""
         cuerpoNoticia = ""
+        categoria = None
         idNoticia = None
+
+    categoriasExistentes = Categorias.objects.all()
     
+
     #parametros a la web template
     contexto = {"modnoticia": idNoticia,
                 "oldTitulo": tituloNoticia,
-                "oldNombreCategoria": nombreCategoria,
                 "oldCuerpoNoticia": cuerpoNoticia,
+                "oldCategoria": categoria,
+                "categoriasExistentes": categoriasExistentes,
                 };
+
+    #print(contexto)
     
     return render(request, "crearnoticia.html", contexto);
 

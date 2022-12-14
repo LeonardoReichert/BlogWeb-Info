@@ -11,7 +11,7 @@
         <h2>Modificar noticia</h2>
     {% endif %}
     </center>
-    
+
     <div align="left">
     <h5>Titulo:</5> <br>
     <input type="text" name="titulo_noticia"  size="90" value="{{oldTitulo}}">
@@ -19,9 +19,28 @@
 
     <div align="left">
     <h5>Cuerpo:</5> <br>
-    <textarea name="" id="" cols="100" rows="10"></textarea>
+    <textarea name="" id="" cols="100" rows="10" maxlength="10000">{{oldCuerpoNoticia}}</textarea>
     </div>
 
+
+    <div align="left">
+    <h5>Categoria:</5> <br>
+    <select name="categorias", id="categorias">
+        {% if oldCategoria %}
+            <option value="{{oldCategoria.id}}" selected>{{oldCategoria.nombre}}</option>
+        {% else %}
+            <option value="" selected>Seleccionar</option>
+        {% endif %}
+        
+        {% for categoria in categoriasExistentes %}
+            {% if categoria != oldCategoria %}
+                <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+            {% endif %}
+        {% endfor %}
+
+        <option value="+">Crear nueva categoria</option>
+    </select>
+    </div>
 
 
 {% endblock %}
