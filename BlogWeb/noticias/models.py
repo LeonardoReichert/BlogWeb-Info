@@ -5,7 +5,7 @@ from usuarios.models import Usuario
 
 
 class Categorias(models.Model):
-    nombre = models.CharField(max_length=50);
+    nombre = models.CharField(max_length=30, unique=True);
 
 
 class Noticia(models.Model):

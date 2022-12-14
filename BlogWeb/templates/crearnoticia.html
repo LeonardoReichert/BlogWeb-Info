@@ -4,20 +4,23 @@
 {% block general %}
 
 
-<center>
-<h2>Crear Noticia</h2>
-</center>
+    <center>
+    {% if not modnoticia %}
+        <h2>Crear Noticia</h2>
+    {% else %}
+        <h2>Modificar noticia</h2>
+    {% endif %}
+    </center>
+    
+    <div align="left">
+    <h5>Titulo:</5> <br>
+    <input type="text" name="titulo_noticia"  size="90" value="{{oldTitulo}}">
+    </div>
 
-
-<div align="left">
-<h5>Titulo:</5> <br>
-<input type="text" name="titulo_noticia"  size="90">
-</div>
-
-<div align="left">
-<h5>Cuerpo:</5> <br>
-<textarea name="" id="" cols="100" rows="10"></textarea>
-</div>
+    <div align="left">
+    <h5>Cuerpo:</5> <br>
+    <textarea name="" id="" cols="100" rows="10"></textarea>
+    </div>
 
 
 
