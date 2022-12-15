@@ -14,9 +14,9 @@
 </head>
 
 <body>
-
-    
-    <div align="center"><p>Mi bella ciudad</p></div>
+    <div align="center">
+    <img src="statics/bciudad.jpg" alt="" width="100", height="100">
+    Mi bella ciudad</div>
 
 
     <nav class="navbar navbar-expand-lg bg-light">
@@ -37,16 +37,16 @@
     <div align="right">
         {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">
-                <button type="button" class="btn btn-primary">Cerrar sesion</button>
+                <button type="button" class="btn btn-info">Cerrar sesion</button>
             </a>
             <p>Bienvenido {{user.username}}</p>
     
          {% else %}
             <a href="{% url 'login' %}">
-                <button type="button" class="btn btn-primary">Login</button>
+                <button type="button" class="btn btn-info">Login</button>
             </a>
             <a href="{% url 'registro' %}">
-                <button type="button" class="btn btn-primary">Registrarse</button>
+                <button type="button" class="btn btn-info">Registrarse</button>
             </a>
             
         {% endif %}
@@ -80,7 +80,6 @@
         </div>
         {% endfor %}
 
-        
     {% endblock %}
 
 

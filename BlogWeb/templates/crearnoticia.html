@@ -11,20 +11,35 @@
     {% endif %}
     </center>
 
-    <form method="post">
+    {% if modnoticia %}<br><br><br>
+    <button type="Button" onclick="borrarNoticia()" class="btn btn-danger">
+        Borrar esta noticia
+    </button>
+    <br><br><br>
+    {% endif %}
+
+
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
+
+        <!-- campo donde se guarda la id de noticia modificando -->
         <input type="hidden" name="modnoticia" id="modnoticia" value="{{modnoticia}}">
 
+        <!-- imagen -->
+        <img src="{{oldPathImg}}" id="showImg1" name="showImg1" width="250px" height="250px"/>
+        <br>
+
+        <label>Elegir imagen:
+            <input type="file" onchange="mostrarImagen()" name="img1" id="img1"
+                    accept="image/png, image/gif, image/jpeg"/>
+        </label>
+
+        <!-- titulo -->
         <div align="left">
         <h5>Titulo:</5> <br>
         <input type="text" name="titulo_noticia"  size="90" value="{{oldTitulo}}">
-        </div>
-
-        <!-- mostrar poner imagen cuando se halla implementado -->
-        <div align="left">
-            <!-- <h5>Imagen:</5> <br> -->
-            <input type="hidden" name="img_part1" size="90" value="">
+        
         </div>
 
         <div align="left">
@@ -67,7 +82,7 @@
                 {% if not modnoticia %}
                     Crear noticia
                 {% else %}
-                    Guardar cambios
+                    Guardar cambios en noticia
                 {% endif %}
             </button>
         </center>
@@ -77,10 +92,10 @@
     <br><br><br><br>
 
     <script>
-        // usado para cuando el usuario elige crear nueva categoria
+        // usado para cuando el usuario elige crear nueva categoria o para borrar una noticia
         function selectCategoria(){
-          var valCategoria = document.getElementById("categoria").value;
-          var inputCategoria = document.getElementById("nueva_categoria");
+          let valCategoria = document.getElementById("categoria").value;
+          let inputCategoria = document.getElementById("nueva_categoria");
           if (valCategoria == "+"){
             inputCategoria.type="text";
             }
@@ -88,6 +103,19 @@
             inputCategoria.type="hidden";
             inputCategoria.value="";
             }
+        }
+
+        function borrarNoticia(){
+            let ask = confirm("Deseas realmente borrar esta noticia?");
+            if(ask == true){
+             window.location.replace("{% url 'crearnoticia' %}?modnoticia={{modnoticia}}&delete=yes");
+            }
+        }
+
+        function mostrarImagen(){
+            let filenameImg = document.getElementById("img1").value;
+            document.getElementById("showImg1").src = filenameImg;
+            //alert("mostrar imagen " + filenameImg);
         }
     </script>
 

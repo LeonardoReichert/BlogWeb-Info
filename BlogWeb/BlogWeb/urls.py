@@ -17,6 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_view
 
+#add para media:
+from django.conf import settings
+from django.conf.urls.static import static
+
+from noticias.views import *;
+
+
+
 from . import views
 
 urlpatterns = [
@@ -26,10 +34,12 @@ urlpatterns = [
     path("login/", auth_view.LoginView.as_view(template_name="login.html"), name="login"),
     path("registro/", views.registro, name="registro"),
     path("logout/", auth_view.logout_then_login, name="logout"),
-    path("crearnoticia/", views.crearNoticia, name="crearnoticia"),
-    path("noticia/", views.verNoticia, name="vernoticia"),
+    path("crearnoticia/", crearNoticia, name="crearnoticia"),
+    path("noticia/", verNoticia, name="vernoticia"),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 
