@@ -159,6 +159,12 @@ def crearNoticia(request):
             #se pidio borrar la noticia?
             if request.GET.get("delete", "") == "yes":
                 #pues se borra y se redirecciona al inicio:
+                pathImg = NoticiaParte.objects.get(noticia=noticia).urlImagen.removeprefix("/");
+                if exists(pathImg):
+                    try:
+                        removeFile(pathImg);
+                    except:
+                        pass;
                 noticia.delete();
                 return redirect("inicio" );
 

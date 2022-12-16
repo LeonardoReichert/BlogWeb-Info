@@ -64,33 +64,37 @@
                 <br><br>
             {% endif %}
         </div>
-        {% for idNoticia,titulo,fecha,urlImg,categoria,descripcionCorta in noticiasVisibles %}
-        <!-- noticia : -->
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" align="left">
-            <div class="col-auto d-none d-lg-block">
-                <img src="{{urlImg}}" alt="Thumbnail" srcset="" width="250" height="250">
-            </div>
+        {% if noticiasVisibles %}
+            {% for idNoticia,titulo,fecha,urlImg,categoria,descripcionCorta in noticiasVisibles %}
+            <!-- noticia : -->
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" align="left">
+                <div class="col-auto d-none d-lg-block">
+                    <img src="{{urlImg}}" alt="Thumbnail" srcset="" width="250" height="250">
+                </div>
 
-            <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">{{categoria}}</strong>
-            <h3 class="mb-0">{{titulo}}</h3>
-            <div class="mb-1 text-muted">{{fecha}}</div>
-            <p class="card-text mb-auto">{{descripcionCorta}}<br>...</p>
-            <a href="{% url 'vernoticia' %}?id={{idNoticia}}" class="stretched-link">Continue reading</a>
+                <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary">{{categoria}}</strong>
+                <h3 class="mb-0">{{titulo}}</h3>
+                <div class="mb-1 text-muted">{{fecha}}</div>
+                <p class="card-text mb-auto">{{descripcionCorta}}<br>...</p>
+                <a href="{% url 'vernoticia' %}?id={{idNoticia}}" class="stretched-link">Continuar leyendo</a>
+                </div>
+                
             </div>
-            
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <center><h3>No hay noticias.</h3></center>
+        {% endif %}
+        
 
     {% endblock %}
-
-
 
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
+
 </body>
 </html>
 

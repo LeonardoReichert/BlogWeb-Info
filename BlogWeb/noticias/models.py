@@ -8,7 +8,6 @@ class Categorias(models.Model):
     nombre = models.CharField(max_length=30, unique=True);
 
 
-
 class Noticia(models.Model):
     titulo = models.CharField(max_length=200);
     #detalles = models.CharField(max_length=200); #obviado
