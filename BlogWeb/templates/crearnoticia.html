@@ -27,27 +27,29 @@
         <input type="hidden" name="modnoticia" id="modnoticia" value="{{modnoticia}}">
 
         <!-- imagen -->
-        <img src="{{oldPathImg}}" id="showImg1" name="showImg1" width="250px" height="250px"/>
+        <img src="{{oldPathImg}}" id="showImg1" name="showImg1"  style="max-width: 750px" >
         <br>
 
         <label>Elegir imagen:
             <input type="file" onchange="mostrarImagen()" name="img1" id="img1"
                     accept="image/png, image/gif, image/jpeg"/>
         </label>
+        <br><br><br>
 
         <!-- titulo -->
         <div align="left">
         <h5>Titulo:</5> <br>
         <input type="text" name="titulo_noticia"  size="90" value="{{oldTitulo}}">
-        
         </div>
+        <br>
 
         <div align="left">
         <h5>Cuerpo:</5> <br>
         <textarea name="body_part1" id="body_part1" cols="100" rows="15" maxlength="10000">{{oldCuerpoNoticia}}</textarea>
+        <br>
         (Max 10000 caracteres.)
         </div>
-
+        <br>
 
         <div align="left">
         <h5>Categoria:</5> <br>
@@ -78,7 +80,7 @@
         </div>
 
         <center>
-            <button type="submit">
+            <button type="submit" class="btn btn-success">
                 {% if not modnoticia %}
                     Crear noticia
                 {% else %}

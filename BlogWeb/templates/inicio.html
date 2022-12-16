@@ -59,22 +59,24 @@
         <!-- definir bloque noticias-->
         <div align="center"><h1>Ultimas noticias</h1>
             {% if user.esAdmin %}
+                <br>
                 <a href="{% url 'crearnoticia' %}"> admin : Crear noticia </a>
+                <br><br>
             {% endif %}
         </div>
-        {% for i in "12345" %}
+        {% for idNoticia,titulo,fecha,urlImg,categoria,descripcionCorta in noticiasVisibles %}
         <!-- noticia : -->
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" align="left">
             <div class="col-auto d-none d-lg-block">
-                <img src="https://www.gravatar.com/avatar/a6dcc45346a0cb642c8e3c7d7161963b?s=256&d=identicon&r=PG" alt="Thumbnail" srcset="" width="250" height="250">
+                <img src="{{urlImg}}" alt="Thumbnail" srcset="" width="250" height="250">
             </div>
 
             <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">World</strong>
-            <h3 class="mb-0">Featured post</h3>
-            <div class="mb-1 text-muted">Nov 12</div>
-            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="stretched-link">Continue reading</a>
+            <strong class="d-inline-block mb-2 text-primary">{{categoria}}</strong>
+            <h3 class="mb-0">{{titulo}}</h3>
+            <div class="mb-1 text-muted">{{fecha}}</div>
+            <p class="card-text mb-auto">{{descripcionCorta}}<br>...</p>
+            <a href="{% url 'vernoticia' %}?id={{idNoticia}}" class="stretched-link">Continue reading</a>
             </div>
             
         </div>

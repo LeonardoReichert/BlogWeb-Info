@@ -4,20 +4,21 @@
 
 {% block general %}
 
-
     <center>
     <strong> Viendo: </strong> 
     <h2>{{noticiaTitulo}}</h2>
         {% if user.esAdmin %}
-            <a href="{% url 'crearnoticia'%}?modnoticia={{idNoticia}}"> Editar esta noticia </a>
+            <a href="{% url 'crearnoticia'%}?modnoticia={{idNoticia}}"> Admin :: Editar esta noticia </a>
         {% endif %}
     </center>
-
-
     <br>
-    
+
+    <center>
+    <img style="max-width: 750px" src="{{imgNoticia}}" alt="">
+    </center>
+
     <font size="5" face="Arial">
-    <p>{{cuerpoNoticia}}</p>
+    <p>{{cuerpoNoticia|linebreaks}}</p>
 
     </font>
 

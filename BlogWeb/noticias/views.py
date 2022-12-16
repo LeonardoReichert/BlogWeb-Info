@@ -29,7 +29,7 @@ def verNoticia(request):
         noticia = None;
     
     contexto = {}
-
+    
     if noticia:
         contexto["idNoticia"] = noticia.id;
         contexto["noticiaTitulo"] = noticia.titulo;
@@ -38,6 +38,7 @@ def verNoticia(request):
         partes = NoticiaParte.objects.filter(noticia=noticia);
         
         #por ahora las noticias se limitaran a un solo cuerpo o parte
+        contexto["imgNoticia"] = partes[0].urlImagen;
         contexto["cuerpoNoticia"] = partes[0].mensaje;
     else:
         return redirect( "inicio" );
@@ -60,7 +61,7 @@ def crearNoticia(request):
     tituloPost = request.POST.get("titulo_noticia", "");
 
     idGetNoticia = request.GET.get("modnoticia", "");
-
+    
     if tituloPost:
         #Peticion con metodo POST
         #se crea o modifica una noticia:

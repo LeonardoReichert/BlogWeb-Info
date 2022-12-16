@@ -13,17 +13,35 @@ from noticias.models import *;
 
 def inicio(request):
 
-
     # - juntar info de noticias -
 
-    totalNoticias = Noticia.objects.count();
+#    totalNoticias = Noticia.objects.count();
+#    print("cantidad noticias: ", totalNoticias)
 
-    print("cantidad noticias: ", totalNoticias)
+    noticiasVisibles = [];
 
+    count = 0;
+    SHOW_MAX = 5; #noticias
+    DESC_MAX = 200;
+    for noticia in Noticia.objects.all().order_by("-fecha"):
+        parte = NoticiaParte.objects.get(noticia=noticia);
+
+        idNoticia = noticia.id;
+        urlImg = parte.urlImagen;
+        titulo = noticia.titulo;
+        fecha = noticia.fecha.strftime("%Y-%m-%d %H:%M");
+        categoria = noticia.categoria.nombre;
+        descripcionCorta = parte.mensaje.strip()[:200].replace("\n\n", "\n");
+
+        noticiasVisibles.append( (idNoticia, titulo, fecha, urlImg,
+                                    categoria, descripcionCorta) );
+
+        count += 1;
+        if count >= SHOW_MAX:
+            break;
 
     #parametros a la web template
-    contexto = {};
-
+    contexto = {"noticiasVisibles": noticiasVisibles};
 
     return render(request, "inicio.html", contexto);
 
