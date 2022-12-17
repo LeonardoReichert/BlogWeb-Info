@@ -19,7 +19,49 @@
 
     <font size="5" face="Arial">
     <p>{{cuerpoNoticia|linebreaks}}</p>
-
     </font>
+
+
+
+
+    {% if user.username %}
+    <!-- Usuario logeado puede comentar -->
+
+    <div class="card text-center">
+        <div class="card-header">
+            <h5 class="card-title">Comentar noticia</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="hidden" name="idNoticiaComentario" id="idNoticiaComentario"
+                    value="{{idNoticia}}">
+
+                <p class="card-text mx-auto">
+                    <textarea name="msgComentario" id="msgComentario" cols="80" rows="5"
+                        maxlength="1000" placeholder="Escribe el comentario..."></textarea>
+                </p>
+                <button type="submit" class="btn btn-primary">Comentar</button>
+            </form>
+        </div>
+    </div>
+    
+      <br><br><br>
+    {% endif %}
+
+    {% for autor, fecha, mensaje in comentarios %}
+        <div class="card">
+            <h5 class="card-header">{{ autor }}</h5>
+            <div class="card-body">
+                <p>{{ fecha }}</p>
+              <!-- <h5 class="card-title">{{comm.autor.username}}</h5> -->
+              <p class="card-text">{{ mensaje }}</p>
+              <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+    
 
 {% endblock %}

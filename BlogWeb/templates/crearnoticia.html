@@ -4,93 +4,97 @@
 {% block general %}
 
     <center>
-    {% if not modnoticia %}
-        <h2>Crear Noticia</h2>
-    {% else %}
-        <h2>Modificar noticia</h2>
-    {% endif %}
+        {% if not modnoticia %}
+            <h2>Crear Noticia</h2>
+        {% else %}
+            <h2>Modificar noticia</h2>
+        {% endif %}
     </center>
 
-    {% if modnoticia %}<br><br><br>
-    <button type="Button" onclick="borrarNoticia()" class="btn btn-danger">
-        Borrar esta noticia
-    </button>
-    <br><br><br>
-    {% endif %}
+    <div class="mx-auto align-items-center" style="width: 1000px;">
 
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-
-
-        <!-- campo donde se guarda la id de noticia modificando -->
-        <input type="hidden" name="modnoticia" id="modnoticia" value="{{modnoticia}}">
-
-        <!-- imagen -->
-        <img src="{{oldPathImg}}" id="showImg1" name="showImg1"  style="max-width: 750px" >
-        <br>
-
-        <label>Elegir imagen:
-            <input type="file" onchange="mostrarImagen()" name="img1" id="img1"
-                    accept="image/png, image/gif, image/jpeg"/>
-        </label>
+        {% if modnoticia %} <br><br><br>
+        <button type="Button" onclick="borrarNoticia()" class="btn btn-danger">
+            Borrar esta noticia
+        </button>
         <br><br><br>
+        {% endif %}
 
-        <!-- titulo -->
-        <div align="left">
-        <h5>Titulo:</5> <br>
-        <input type="text" name="titulo_noticia"  size="90" value="{{oldTitulo}}">
-        </div>
-        <br>
 
-        <div align="left">
-        <h5>Cuerpo:</5> <br>
-        <textarea name="body_part1" id="body_part1" cols="100" rows="15" maxlength="10000">{{oldCuerpoNoticia}}</textarea>
-        <br>
-        (Max 10000 caracteres.)
-        </div>
-        <br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <div align="left">
-        <h5>Categoria:</5> <br>
-        <select name="categoria", id="categoria" onchange="selectCategoria()">
-            {% if oldCategoria %}
-                <optgroup label="Actual">
-                <option value="{{oldCategoria.id}}" selected>{{oldCategoria.nombre}}</option>
-                </optgroup>
-            {% else %}
-                <option value="" selected>Seleccionar</option>
-            {% endif %}
-            <optgroup label="Otras categorias">
-            {% for categoria in categoriasExistentes %}
-                {% if categoria != oldCategoria %}
-                <option value="{{categoria.id}}">{{categoria.nombre}}</option>
-                {% endif %}
-            {% endfor %}
-            </optgroup>
 
-            <optgroup label="Crear">
-            <option value="+">Crear nueva categoria</option>
-            </optgroup>
-        </select>
+            <!-- campo donde se guarda la id de noticia modificando -->
+            <input type="hidden" name="modnoticia" id="modnoticia" value="{{modnoticia}}">
 
-        <input type="hidden" name="nueva_categoria" id="nueva_categoria" size="30" maxlenght=30 value=""
-                placeholder="Nueva categoria aqui...">
-        
-        </div>
+            <!-- imagen -->
+            <img src="{{oldPathImg}}" id="showImg1" name="showImg1"  style="max-width: 750px" >
+            <br>
 
-        <center>
-            <button type="submit" class="btn btn-success">
-                {% if not modnoticia %}
-                    Crear noticia
+            <label>Elegir imagen:
+                <input type="file" onchange="mostrarImagen()" name="img1" id="img1"
+                        accept="image/png, image/gif, image/jpeg"/>
+            </label>
+            <br><br><br>
+
+            <!-- titulo -->
+            <div align="left">
+            <h5>Titulo:</5> <br>
+            <input type="text" name="titulo_noticia" maxlength="90" size="90" value="{{oldTitulo}}">
+            </div>
+            <br>
+
+            <div align="left">
+            <h5>Cuerpo:</5> <br>
+            <textarea name="body_part1" id="body_part1" cols="100" rows="15" maxlength="10000">{{oldCuerpoNoticia}}</textarea>
+            <br>
+            (Max 10000 caracteres.)
+            </div>
+            <br>
+
+            <div align="left">
+            <h5>Categoria:</5> <br>
+            <select name="categoria", id="categoria" onchange="selectCategoria()">
+                {% if oldCategoria %}
+                    <optgroup label="Actual">
+                    <option value="{{oldCategoria.id}}" selected>{{oldCategoria.nombre}}</option>
+                    </optgroup>
                 {% else %}
-                    Guardar cambios en noticia
+                    <option value="" selected>Seleccionar</option>
                 {% endif %}
-            </button>
-        </center>
+                {% if categoriasExistentes %}
+                    <optgroup label="Otras categorias">
+                    {% for categoria in categoriasExistentes %}
+                        <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+                    {% endfor %}
+                    </optgroup>
+                {% endif %}
 
-    </form>
+                <optgroup label="Crear">
+                <option value="+">Crear nueva categoria</option>
+                </optgroup>
+            </select>
 
+            <input type="hidden" name="nueva_categoria" id="nueva_categoria" size="30" maxlength="30" value=""
+                    placeholder="Nueva categoria aqui...">
+            
+            </div>
+            <br>
+
+            <center>
+                <button type="submit" class="btn btn-success">
+                    {% if not modnoticia %}
+                        Crear noticia
+                    {% else %}
+                        Guardar cambios en noticia
+                    {% endif %}
+                </button>
+            </center>
+
+        </form>
+        
+    </div>
     <br><br><br><br>
 
     <script>
@@ -100,7 +104,8 @@
           let inputCategoria = document.getElementById("nueva_categoria");
           if (valCategoria == "+"){
             inputCategoria.type="text";
-            }
+            inputCategoria.focus();
+        }
           else{
             inputCategoria.type="hidden";
             inputCategoria.value="";

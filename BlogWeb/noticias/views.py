@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect;
 from noticias.models import *
 from django.urls import reverse
 
+from django.http import HttpResponseRedirect
+
 
 #from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -12,15 +14,33 @@ from os import remove as removeFile
 
 # Create your views here.
 
-
 #para subir la imagen:
 fstorage = FileSystemStorage();
 
 
 
+def publicarComentario(request):
 
+    noticia = Noticia.objects.get(id=request.POST["idNoticiaComentario"])
+    
+    msgComentario = request.POST["msgComentario"];
+    comentario = Comentario.objects.create(noticia=noticia,
+                                            autor=request.user,
+                                            mensaje=msgComentario);
+    comentario.save()
+
+
+    
 
 def verNoticia(request):
+
+
+    if "idNoticiaComentario" in request.POST and "msgComentario" in request.POST:
+        publicarComentario(request);
+        #el usuario uso post para dejar un comentario en la noticia
+        return redirect("/noticia/?id="+str(request.POST["idNoticiaComentario"]))
+
+
     
     idNoticia = request.GET.get("id", None);
     try:
@@ -40,6 +60,11 @@ def verNoticia(request):
         #por ahora las noticias se limitaran a un solo cuerpo o parte
         contexto["imgNoticia"] = partes[0].urlImagen;
         contexto["cuerpoNoticia"] = partes[0].mensaje;
+
+        contexto["comentarios"] = [
+            (c.autor,
+            c.fecha.strftime("%Y-%m-%d %H:%M"),
+            c.mensaje)  for c in Comentario.objects.filter(noticia=noticia)]
     else:
         return redirect( "inicio" );
 
@@ -71,6 +96,8 @@ def crearNoticia(request):
         if not mensajePost1:
             #dar error, el cuerpo de la noticia esta vacio
             return redirect( "inicio" );
+        
+        mensajePost1 = mensajePost1[:Limits.mensajeNoticia];
 
         #tanto en la creacion como en la modificacion se puede crear una categoria
         idCategoria = request.POST.get("categoria", "");
@@ -86,7 +113,8 @@ def crearNoticia(request):
             #categoria = None
             if nombreNuevaCategoria:
                 #categoria son valores unicos, si no existe se crea
-                categoria, created = Categorias.objects.get_or_create(nombre=nombreNuevaCategoria);
+                categoria, created = Categorias.objects.get_or_create(
+                                        nombre=nombreNuevaCategoria[:Limits.categoriaNombre]);
         else:
             try:
                 categoria = Categorias.objects.get(id=idCategoria);
@@ -97,6 +125,8 @@ def crearNoticia(request):
         if not categoria:
             #dar error, no se creo una categoria
             return redirect( "inicio" );
+
+        tituloPost = tituloPost[:Limits.tituloNoticia]; #200 length max
 
         imgPost1 = "";
         img1 = request.FILES.get("img1", "");
@@ -124,7 +154,6 @@ def crearNoticia(request):
             noticia = Noticia.objects.get(id=idPostNoticia);
             noticia.titulo = tituloPost;
             noticia.categoria = categoria;
-            noticia.save();
 
             parte1 = NoticiaParte.objects.get(noticia = noticia);
             
@@ -143,6 +172,7 @@ def crearNoticia(request):
                 parte1.urlImagen = imgPost1;
                 
             parte1.save();
+            noticia.save();
 
         #print("post", request.POST)        
         return redirect("/noticia/?id="+str(idPostNoticia))
@@ -151,7 +181,6 @@ def crearNoticia(request):
         #Peticion con metodo GET
         #pedido de entrar a modificar la noticia
         #se recupera y carga los campos de la notica:
-        
         
         try:
             noticia = Noticia.objects.get(pk=idGetNoticia);
@@ -186,7 +215,7 @@ def crearNoticia(request):
         cuerpoNoticia = ""
         categoria = ""
 
-    categoriasExistentes = Categorias.objects.all()
+    categoriasExistentes = [c for c in Categorias.objects.all() if not c==categoria]
     
     #parametros a la web template
     contexto = {"modnoticia": idGetNoticia,
@@ -198,6 +227,8 @@ def crearNoticia(request):
                 };
 
     return render(request, "crearnoticia.html", contexto);
+
+
 
 
 

@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # redefinir usuario de django:
 AUTH_USER_MODEL = "usuarios.Usuario"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/" #cuando loguea
 LOGIN_URL = "/" #cuando se desloguea
 
 
@@ -38,7 +38,11 @@ import os.path
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATICFILES_DIR = (
+    os.path.join(BASE_DIR, "static"),
+)
 
+print(STATICFILES_DIR)
 
 
 # Application definition:

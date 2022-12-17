@@ -10,7 +10,6 @@ from noticias.models import *;
 #from django.core.files.storage import FileSystemStorage
 
 
-
 def inicio(request):
 
     # - juntar info de noticias -
@@ -23,6 +22,7 @@ def inicio(request):
     count = 0;
     SHOW_MAX = 5; #noticias
     DESC_MAX = 200;
+
     for noticia in Noticia.objects.all().order_by("-fecha"):
         parte = NoticiaParte.objects.get(noticia=noticia);
 
