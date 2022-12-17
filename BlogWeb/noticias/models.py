@@ -2,6 +2,15 @@ from django.db import models
 from usuarios.models import Usuario
 # Create your models here.
 
+from datetime import datetime;
+
+
+
+def horaUtcToArg(fecha):
+    #transformar de utc a utc-3 (Argentina):
+    fecha = datetime.utcfromtimestamp(fecha.timestamp()-(60*60*3));
+    #formateamos la hora :
+    return fecha.isoformat(" ", "minutes");
 
 class Limits:
     categoriaNombre = 30;

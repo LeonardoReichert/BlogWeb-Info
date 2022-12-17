@@ -12,10 +12,13 @@ from django.core.files.storage import FileSystemStorage
 from os.path import splitext, exists;
 from os import remove as removeFile
 
+
 # Create your views here.
 
 #para subir la imagen:
 fstorage = FileSystemStorage();
+
+
 
 
 
@@ -29,16 +32,16 @@ def publicarComentario(request):
                                             mensaje=msgComentario);
     comentario.save()
 
+    #return comentario.id;
 
-    
+
 
 def verNoticia(request):
-
 
     if "idNoticiaComentario" in request.POST and "msgComentario" in request.POST:
         publicarComentario(request);
         #el usuario uso post para dejar un comentario en la noticia
-        return redirect("/noticia/?id="+str(request.POST["idNoticiaComentario"]))
+        return redirect("/noticia/?id="+str(request.POST["idNoticiaComentario"]));
 
 
     
@@ -61,10 +64,13 @@ def verNoticia(request):
         contexto["imgNoticia"] = partes[0].urlImagen;
         contexto["cuerpoNoticia"] = partes[0].mensaje;
 
-        contexto["comentarios"] = [
-            (c.autor,
-            c.fecha.strftime("%Y-%m-%d %H:%M"),
-            c.mensaje)  for c in Comentario.objects.filter(noticia=noticia)]
+        contexto["comentarios"] = [];
+        for c in Comentario.objects.filter(noticia=noticia):
+            
+            contexto["comentarios"].append((c.id,
+                                            c.autor.username,
+                                            horaUtcToArg(c.fecha),
+                                            c.mensaje));
     else:
         return redirect( "inicio" );
 

@@ -14,7 +14,7 @@
     <br>
 
     <center>
-    <img style="max-width: 750px" src="{{imgNoticia}}" alt="">
+    <img style="max-width: 750px" class="img-fluid" src="{{imgNoticia}}" alt="">
     </center>
 
     <font size="5" face="Arial">
@@ -42,7 +42,7 @@
                     <textarea name="msgComentario" id="msgComentario" cols="80" rows="5"
                         maxlength="1000" placeholder="Escribe el comentario..."></textarea>
                 </p>
-                <button type="submit" class="btn btn-primary">Comentar</button>
+                <button type="submit" class="btn btn-info">Comentar</button>
             </form>
         </div>
     </div>
@@ -50,18 +50,27 @@
       <br><br><br>
     {% endif %}
 
-    {% for autor, fecha, mensaje in comentarios %}
+    <center>
+        <h3>Comentarios</h3>
+        <br>
+    </center>
+
+    {% for id, autor, fecha, mensaje in comentarios %}
         <div class="card">
-            <h5 class="card-header">{{ autor }}</h5>
+            <p class="card-header">{{ fecha }}</p>
             <div class="card-body">
-                <p>{{ fecha }}</p>
+            <h5>{{ autor }}:</h5>
               <!-- <h5 class="card-title">{{comm.autor.username}}</h5> -->
               <p class="card-text">{{ mensaje }}</p>
               <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
             </div>
         </div>
-        <br>
+    {% empty %}
+        <br><br>
+        <center><h5>Aun no hay comentarios.<h5></center>
+        
     {% endfor %}
-    
+
+    <br><br><br><br>
 
 {% endblock %}

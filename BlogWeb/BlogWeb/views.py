@@ -29,7 +29,7 @@ def inicio(request):
         idNoticia = noticia.id;
         urlImg = parte.urlImagen;
         titulo = noticia.titulo;
-        fecha = noticia.fecha.strftime("%Y-%m-%d %H:%M");
+        fecha = horaUtcToArg(noticia.fecha);
         categoria = noticia.categoria.nombre;
         descripcionCorta = parte.mensaje.strip()[:200].replace("\n\n", "\n");
 

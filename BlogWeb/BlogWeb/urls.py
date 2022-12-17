@@ -38,7 +38,7 @@ urlpatterns = [
     path("noticia/", verNoticia, name="vernoticia"),
 
     #includes apps urls:
-    path("noticias/", include("noticias.urls"))
+    #path("noticias/", include("noticias.urls"))
 ]
 
 
