@@ -22,17 +22,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from noticias.views import *;
-
+from usuarios.views import Registro;
 
 
 from . import views
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("inicio/", views.inicio),
     path("", views.inicio, name="inicio"),
     path("login/", auth_view.LoginView.as_view(template_name="login.html"), name="login"),
-    path("registro/", views.registro, name="registro"),
+    path("registro/", Registro.as_view(), name="registro"),
     path("logout/", auth_view.logout_then_login, name="logout"),
     path("crearnoticia/", crearNoticia, name="crearnoticia"),
     path("noticia/", verNoticia, name="vernoticia"),

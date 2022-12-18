@@ -1,2 +1,25 @@
+{% extends 'inicio.html' %}
 
-el registro aqui
+
+{% block titlepage %}
+    - Registrarse
+{% endblock %}
+
+
+
+{% block general %}
+    
+<div class="card">
+    <div class="card-header">
+    <center><h2>Iniciar sesion</h2></center>
+    <br><br>
+        
+        <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-info">Crear</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

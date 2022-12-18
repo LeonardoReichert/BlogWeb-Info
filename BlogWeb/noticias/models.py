@@ -12,6 +12,8 @@ def horaUtcToArg(fecha):
     #formateamos la hora :
     return fecha.isoformat(" ", "minutes");
 
+
+
 class Limits:
     categoriaNombre = 30;
     tituloNoticia = 200;
@@ -44,7 +46,7 @@ class NoticiaParte(models.Model):
 class Comentario(models.Model):
     noticia = models.ForeignKey(Noticia, on_delete=models.CASCADE);
     autor = models.ForeignKey(Usuario, on_delete=models.CASCADE);
-    mensaje = models.TextField(max_length = Limits.mensajeComentario);
+    mensaje = models.CharField(max_length = Limits.mensajeComentario);
     fecha = models.DateTimeField(auto_now=True);
 
 

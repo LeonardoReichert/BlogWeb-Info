@@ -2,8 +2,17 @@
 {% extends 'inicio.html' %}
 
 
+{% block titlepage %}
+    - {{noticiaTitulo}}
+{% endblock %}
+
+
 {% block general %}
 
+    
+<div class="card">
+    <div class="card-body">
+    
     <center>
     <strong> Viendo: </strong> 
     <h2>{{noticiaTitulo}}</h2>
@@ -12,20 +21,21 @@
         {% endif %}
     </center>
     <br>
-
+    
     <center>
-    <img style="max-width: 750px" class="img-fluid" src="{{imgNoticia}}" alt="">
+    <img class="img-fluid" src="{{imgNoticia}}" alt="">
     </center>
+    <br>
 
     <font size="5" face="Arial">
-    <p>{{cuerpoNoticia|linebreaks}}</p>
+        <p class="text-break">{{cuerpoNoticia|linebreaks}}</p>
     </font>
-
-
+    </div></div>
 
 
     {% if user.username %}
     <!-- Usuario logeado puede comentar -->
+    <br>
 
     <div class="card text-center">
         <div class="card-header">

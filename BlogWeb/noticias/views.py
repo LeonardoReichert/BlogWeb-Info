@@ -27,6 +27,10 @@ def publicarComentario(request):
     noticia = Noticia.objects.get(id=request.POST["idNoticiaComentario"])
     
     msgComentario = request.POST["msgComentario"];
+    if msgComentario.strip() == "":
+        #el comentario solo es contenido vacio.
+        return;
+        
     comentario = Comentario.objects.create(noticia=noticia,
                                             autor=request.user,
                                             mensaje=msgComentario);

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -33,16 +34,17 @@ AUTH_USER_MODEL = "usuarios.Usuario"
 LOGIN_REDIRECT_URL = "/" #cuando loguea
 LOGIN_URL = "/" #cuando se desloguea
 
-
-import os.path
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_DIR = (
-    os.path.join(os.path.dirname(BASE_DIR), "static"),
+STATICFILES_DIRS = (
+    #BASE_DIR / "static",
+    os.path.join(BASE_DIR, "static"),
+    #os.path.join(os.path.dirname(BASE_DIR), "static"),
 )
 
-print(STATICFILES_DIR)
+
+
 
 
 # Application definition:
@@ -166,9 +168,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+#LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
+
+LANGUAGE_CODE = "es-AR"
+#TIME_ZONE = "America/Argentina/Buenos_Aires"
 
 USE_I18N = True
 

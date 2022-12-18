@@ -31,7 +31,7 @@ def inicio(request):
         titulo = noticia.titulo;
         fecha = horaUtcToArg(noticia.fecha);
         categoria = noticia.categoria.nombre;
-        descripcionCorta = parte.mensaje.strip()[:200].replace("\n\n", "\n");
+        descripcionCorta = parte.mensaje.strip()[:DESC_MAX].replace("\n\n", "\n");
 
         noticiasVisibles.append( (idNoticia, titulo, fecha, urlImg,
                                     categoria, descripcionCorta) );
