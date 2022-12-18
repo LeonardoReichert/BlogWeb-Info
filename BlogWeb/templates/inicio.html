@@ -39,6 +39,16 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="#"><h4>Contacto</h4></a>
                     </li>
+                    {% if user.esAdmin %}
+                        <li>
+                            <a class="nav-link active" href="{% url 'administrar'%}">
+                                <font color="#00A000">
+                                    <h4>Administrar</h4>
+                                </font>
+                            </a>
+                        </li>
+                    {% endif %}
+                        
                 </ul>
         </div>
         

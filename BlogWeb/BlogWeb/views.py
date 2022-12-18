@@ -30,7 +30,12 @@ def inicio(request):
         urlImg = parte.urlImagen;
         titulo = noticia.titulo;
         fecha = horaUtcToArg(noticia.fecha);
-        categoria = noticia.categoria.nombre;
+        if noticia.categoria:
+            categoria = noticia.categoria.nombre;
+        else:
+            #probablemente la categoria fue eliminada
+            categoria = "Sin categoria";
+
         descripcionCorta = parte.mensaje.strip()[:DESC_MAX].replace("\n\n", "\n");
 
         noticiasVisibles.append( (idNoticia, titulo, fecha, urlImg,

@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 
 from noticias.views import *;
 from usuarios.views import Registro;
-
+from administrar.views import *;
 
 from . import views
 
@@ -38,6 +38,7 @@ urlpatterns = [
     path("logout/", auth_view.logout_then_login, name="logout"),
     path("crearnoticia/", crearNoticia, name="crearnoticia"),
     path("noticia/", verNoticia, name="vernoticia"),
+    path("administrar/", administrar, name="administrar")
 
     #includes apps urls:
     #path("noticias/", include("noticias.urls"))

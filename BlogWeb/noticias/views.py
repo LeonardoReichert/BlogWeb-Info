@@ -200,13 +200,14 @@ def crearNoticia(request):
                 #pues se borra y se redirecciona al inicio:
                 pathImg = NoticiaParte.objects.get(noticia=noticia).urlImagen.removeprefix("/");
                 if exists(pathImg):
+                    #se intenta borra la imagen que ya no se usara:
                     try:
                         removeFile(pathImg);
                     except:
                         pass;
                 noticia.delete();
                 return redirect("inicio" );
-
+            
             tituloNoticia = noticia.titulo;
             categoria = noticia.categoria;
 

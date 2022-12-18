@@ -1,0 +1,107 @@
+
+{% extends 'inicio.html' %}
+
+
+{% block titlepage %}
+         - Administrar
+{% endblock%}
+
+
+{% block general %}
+
+    <div class="card">
+        <div class="card-body">
+            
+            <br>
+
+
+            {% include 'includes/errores.html' %}
+
+            <h2>Administrar</h2>
+
+            
+            
+            <br>
+            <div class="row mb-3">
+                <label for="btnInfoUser" class="col-sm-2 col-form-label">
+                        Noticia:
+                </label>
+                <div class="col-sm-10">
+                    <a href="{% url 'crearnoticia' %}">
+                        <button  id="btnInfoUser" type="button" class="btn btn-dark">
+                            Crear una noticia
+                        </button>
+                    </a>
+
+                        <button onclick="mostrarQuitarCategoria()" id="btnInfoUser"
+                            {% if not categoriasExistentes %} disabled {% endif %}
+                                                type="button" class="btn btn-dark">
+                            Quitar una categoria
+                        </button>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <select hidden name="optCategoriasDel", id="optCategoriasDel">
+                                <option hidden value="" selected>Seleccionar categoria</option>
+                                    <optgroup label="Categorias existentes">
+                                    {% for categoria in categoriasExistentes %}
+                                        <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+                                    {% endfor %}
+                                    </optgroup>
+                            </select>
+                
+                            <button hidden type="submit" name="acceptDelCate" id="acceptDelCate">
+                                Quitar
+                            </button>
+                            <p id="msgWarnDelCate" hidden>
+                                Algunas categorias podrian quedar "sin categoria"
+                            </p>
+                        </form>
+                </div>
+            </div>
+
+
+            <!--
+            <br>
+            <div class="row mb-3">
+                <label for="btnInfoUser" class="col-sm-2 col-form-label">
+                        Usuarios:
+                </label>
+                <div class="col-sm-10">
+                    <button  id="btnInfoUser" type="button" class="btn btn-dark">
+                        Info usuarios
+                    </button>
+
+                    <button  id="btnRestrictUser" type="button" class="btn btn-dark">
+                        Restringir usuario
+                    </button>
+                </div>
+            </div>
+            -->
+
+
+
+            <br><br>
+            
+        </div>
+    </div>
+
+    <script>
+        function mostrarQuitarCategoria(){
+            //alert("asd");
+            //document.getElementById("optCategorias").style.display = 'block';
+            let ctrlCate  = document.getElementById("optCategoriasDel");
+            let acptCate  = document.getElementById("acceptDelCate");
+            let msgWarn = document.getElementById("msgWarnDelCate");
+            let state = !ctrlCate.hidden;
+            
+            acptCate.hidden = state;
+            ctrlCate.hidden = state;
+            msgWarn.hidden = state;
+            ctrlCate.value = "";
+        }
+    </script>
+
+
+{% endblock %}
