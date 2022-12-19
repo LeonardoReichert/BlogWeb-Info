@@ -11,7 +11,7 @@ from django.core.files.storage import FileSystemStorage
 
 from os.path import splitext, exists;
 from os import remove as removeFile
-
+import time;
 
 # Create your views here.
 
@@ -37,6 +37,9 @@ def publicarComentario(request):
     comentario.save()
 
     #return comentario.id;
+
+
+
 
 
 
@@ -105,7 +108,7 @@ def crearNoticia(request):
         mensajePost1 = request.POST.get("body_part1", "");
         if not mensajePost1:
             #dar error, el cuerpo de la noticia esta vacio
-            return redirect( "inicio" );
+            return redirect( "crearnoticia" );
         
         mensajePost1 = mensajePost1[:Limits.mensajeNoticia];
 
@@ -115,7 +118,7 @@ def crearNoticia(request):
 
         if not idCategoria:
             #no se selecciono ninguna categoria, error
-            return redirect( "inicio" );
+            return redirect( "crearnoticia" );
 
         elif idCategoria == "+":
             #se eligio crear la categoria
@@ -134,23 +137,25 @@ def crearNoticia(request):
 
         if not categoria:
             #dar error, no se creo una categoria
-            return redirect( "inicio" );
+            return redirect( "crearnoticia" );
 
         tituloPost = tituloPost[:Limits.tituloNoticia]; #200 length max
 
         imgPost1 = "";
         img1 = request.FILES.get("img1", "");
         if img1 :
-            filename = fstorage.save("n"+splitext(img1.name)[1], img1);
+            #elegimos una marca de tiempo unica para el nombre de la imagen
+            #esto reduce problemas de cache donde se van imagenes anteriores
+            timestamp = str(time.time());
+            filename = fstorage.save(timestamp+splitext(img1.name)[1], img1);
             imgPost1 = fstorage.url(filename);
-            
 
         if not idPostNoticia:
             #no se especifica el ID, se crea nueva noticia
 
             if not imgPost1:
                 #dar error, no se puso imagen en una nueva noticia
-                return redirect( "inicio" );
+                return redirect( "crearnoticia" );
 
             noticia = Noticia.objects.create(titulo=tituloPost,
                                              autor=request.user,
@@ -226,7 +231,7 @@ def crearNoticia(request):
         cuerpoNoticia = ""
         categoria = ""
 
-    categoriasExistentes = [c for c in Categorias.objects.all() if not c==categoria]
+    categoriasExistentes = [c for c in Categorias.objects.all() if c != categoria]
     
     #parametros a la web template
     contexto = {"modnoticia": idGetNoticia,
@@ -239,6 +244,10 @@ def crearNoticia(request):
 
     return render(request, "crearnoticia.html", contexto);
 
+
+
+
+#def paginarNoticias(consultaOrm, ):
 
 
 

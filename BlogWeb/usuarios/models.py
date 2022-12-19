@@ -8,3 +8,6 @@ class Usuario(AbstractUser):
     fechaNac = models.DateField(default=None, null=True)
     #username = models.CharField(default=None, null=True)
 
+
+
+
