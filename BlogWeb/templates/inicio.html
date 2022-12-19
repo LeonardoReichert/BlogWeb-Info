@@ -85,6 +85,37 @@
                 <br><br>
             {% endif %}</center>
         
+
+        <!--
+            PAGINACION IMPROVISADA
+        -->
+
+        <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item {%if not paginaAnterior %}disabled{% endif %}">
+                <a class="page-link" href="?pagina={{paginaAnterior}}">Atras</a>
+              </li>
+              {%if paginaActual != 1 %}
+              <li class="page-item">
+                <a class="page-link" href="?pagina=1">1..</a>
+              </li>
+              {% endif %}
+              <li class="page-item active" aria-current="page">
+                <span class="page-link">{{paginaActual}}</span>
+              </li>
+              {% if paginaActual != paginaMaxima %}
+              <li class="page-item">
+                <a class="page-link" href="?pagina={{paginaMaxima}}">..{{paginaMaxima}}</a>
+              </li>
+              {% endif %}
+              <li class="page-item {%if not paginaSiguiente %}disabled{% endif %}">
+                <a class="page-link" href="?pagina={{paginaSiguiente}}">Siguiente</a>
+              </li>
+            </ul>
+          </nav>
+
+        <!-- paginacion terminada -->
+        
         {% for idNoticia,titulo,fecha,urlImg,categoria,descripcionCorta in noticiasVisibles %}
             <!-- noticia : -->
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" align="left">
