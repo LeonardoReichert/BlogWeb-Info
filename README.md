@@ -7,3 +7,4 @@ Las credenciales y datos a configurar para la conexion al motor de base de datos
 Este archivo es leido para la conexion a la base de datos
 
 
+Paola Arismendi
