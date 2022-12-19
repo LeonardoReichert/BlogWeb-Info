@@ -81,40 +81,68 @@
             <center><h3>Ultimas noticias</h3>
             {% if user.esAdmin %}
                 <br>
-                <a href="{% url 'crearnoticia' %}"> admin :: Crear noticia </a>
+                <a href="{% url 'crearnoticia' %}">
+                    <button type="button" class="btn btn-success">
+                        Admin: Crear noticia
+                    </button> </a>
                 <br><br>
             {% endif %}</center>
         
 
         <!--
-            PAGINACION IMPROVISADA
+            PAGINACION arriba
+
         -->
 
-        <nav aria-label="...">
-            <ul class="pagination">
-              <li class="page-item {%if not paginaAnterior %}disabled{% endif %}">
-                <a class="page-link" href="?pagina={{paginaAnterior}}">Atras</a>
-              </li>
-              {%if paginaActual != 1 %}
-              <li class="page-item">
-                <a class="page-link" href="?pagina=1">1..</a>
-              </li>
-              {% endif %}
-              <li class="page-item active" aria-current="page">
-                <span class="page-link">{{paginaActual}}</span>
-              </li>
-              {% if paginaActual != paginaMaxima %}
-              <li class="page-item">
-                <a class="page-link" href="?pagina={{paginaMaxima}}">..{{paginaMaxima}}</a>
-              </li>
-              {% endif %}
-              <li class="page-item {%if not paginaSiguiente %}disabled{% endif %}">
-                <a class="page-link" href="?pagina={{paginaSiguiente}}">Siguiente</a>
-              </li>
-            </ul>
-          </nav>
+        {% include 'includes/paginador.html' %}
 
-        <!-- paginacion terminada -->
+        <div class="input-group mb-3">
+            <label  for="optFiltrar">Viendo por: </label>
+            <select id="optFiltrar" name="optFiltrar" onchange="seleccionarFiltro()">
+              {% if not categoriaSeleccionada %}
+                <option value="nuevos" selected>Mas nuevos</option>
+                <option value="categoria">Una categoria</option>
+              {% else %}
+                <option value="nuevos">Mas nuevos</option>
+                <option value="categoria" selected>Una categoria</option>
+              {% endif %}
+            </select>
+            
+            <!-- categorias: -->
+            
+            {% if categoriaSeleccionada %}
+            <select id="optsCategoriasFilter" onchange="filtrarCategoria()">
+            {% else %}
+            <select hidden id="optsCategoriasFilter" onchange="filtrarCategoria()">
+            {% endif %}
+                    
+                    {% if categoriaSeleccionada %}
+                        {% if categoriaSeleccionada != "null" %}
+                            <option value="{{categoriaSeleccionada}}"
+                                    selected>{{categoriaSeleccionada}}</option>
+                        {% endif %}
+                    {% else %}
+                        <option value="" selected>Seleccionar categoria</option>
+                    {% endif %}
+                    <optgroup label="Categorias existentes">
+                        {% for categoria in categoriasExistentes %}
+                            <option value="{{categoria.nombre}}">
+                                {{categoria.nombre}}
+                            </option>
+                        {% endfor %}
+                    </optgroup>
+                    <optgroup label="Otras">
+                        {% if categoriaSeleccionada == "null"%}
+                            <option selected value="null">Descategorizados</option>
+                        {% else %}
+                            <option value="null">Descategorizados</option>
+                        {% endif %}
+                    </optgroup>
+                    
+            </select>
+            
+
+        </div>
         
         {% for idNoticia,titulo,fecha,urlImg,categoria,descripcionCorta in noticiasVisibles %}
             <!-- noticia : -->
@@ -136,9 +164,46 @@
             <center><h3>No hay noticias.</h3></center>
         {% endfor %}
 
+
     {% endblock %}
 
+    <!-- Paginador abajo -->
+
+    {% if noticiasVisibles %}
+        {% include 'includes/paginador.html' %}
+    {% endif %}
+
+    <!-- paginacion terminada -->
+
+    <br>
+    <br>
+
     </div>
+
+    <script>
+        function seleccionarFiltro(){
+            
+            let filtro = document.getElementById("optFiltrar").value;
+            let listaCategorias = document.getElementById("optsCategoriasFilter");
+            //optsCategoriasFilter
+
+            if (filtro == "nuevos"){
+                window.location.href = "{% url 'inicio' %}";
+            }
+            else if(filtro == "categoria"){
+                listaCategorias.hidden = false;
+            }
+            //else{
+              //  listaCategorias.hidden = false;
+            //}
+
+        }
+
+        function filtrarCategoria(){
+            let categoria = document.getElementById("optsCategoriasFilter").value;
+            window.location.href = "{% url 'inicio' %}?categoria="+categoria;
+        }
+    </script>
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

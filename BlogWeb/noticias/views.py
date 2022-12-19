@@ -40,9 +40,6 @@ def publicarComentario(request):
 
 
 
-
-
-
 def verNoticia(request):
 
     if "idNoticiaComentario" in request.POST and "msgComentario" in request.POST:
@@ -50,11 +47,9 @@ def verNoticia(request):
         #el usuario uso post para dejar un comentario en la noticia
         return redirect("/noticia/?id="+str(request.POST["idNoticiaComentario"]));
 
-
-    
     idNoticia = request.GET.get("id", None);
     try:
-        noticia = Noticia.objects.get(pk=idNoticia);
+        noticia = Noticia.objects.get(id=idNoticia);
     except:
         noticia = None;
     
@@ -79,9 +74,11 @@ def verNoticia(request):
                                             horaUtcToArg(c.fecha),
                                             c.mensaje));
     else:
+        # probablemente se paso un id de pagina por parametro a la pagina que no existe
         return redirect( "inicio" );
 
     return render(request, "noticia.html", contexto);
+
 
 
 
@@ -124,7 +121,7 @@ def crearNoticia(request):
             #se eligio crear la categoria
             nombreNuevaCategoria = request.POST.get("nueva_categoria", "");
             #categoria = None
-            if nombreNuevaCategoria:
+            if nombreNuevaCategoria and nombreNuevaCategoria.lower() != "null":
                 #categoria son valores unicos, si no existe se crea
                 categoria, created = Categorias.objects.get_or_create(
                                         nombre=nombreNuevaCategoria[:Limits.categoriaNombre]);

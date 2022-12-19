@@ -47,7 +47,8 @@
 
             <div align="left">
             <h5>Cuerpo:</5> <br>
-            <textarea name="body_part1" id="body_part1" cols="100" rows="15" maxlength="10000">{{oldCuerpoNoticia}}</textarea>
+            <textarea class="form-control" name="body_part1" id="body_part1" cols="100"
+                    rows="15" maxlength="10000">{{oldCuerpoNoticia}}</textarea>
             <br>
             (Max 10000 caracteres.)
             </div>
@@ -55,7 +56,7 @@
 
             <div align="left">
             <h5>Categoria:</5> <br>
-            <select name="categoria", id="categoria" onchange="selectCategoria()">
+            <select class="form-select" name="categoria", id="categoria" onchange="selectCategoria()">
                 {% if oldCategoria %}
                     <optgroup label="Actual">
                     <option value="{{oldCategoria.id}}" selected>{{oldCategoria.nombre}}</option>

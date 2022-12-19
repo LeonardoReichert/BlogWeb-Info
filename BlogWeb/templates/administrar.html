@@ -23,7 +23,7 @@
             <br>
             <div class="row mb-3">
                 <label for="btnInfoUser" class="col-sm-2 col-form-label">
-                    <h4>Noticia:</h4>
+                    <h5>Noticia:</h5>
                 </label>
                 <div class="col-sm-10">
                     <a href="{% url 'crearnoticia' %}">
@@ -43,18 +43,18 @@
 
                             <select hidden name="optCategoriasDel", id="optCategoriasDel">
                                 <option hidden value="" selected>Seleccionar categoria</option>
-                                    <optgroup label="Categorias existentes">
+                                <optgroup label="Categorias existentes">
                                     {% for categoria in categoriasExistentes %}
                                         <option value="{{categoria.id}}">{{categoria.nombre}}</option>
                                     {% endfor %}
-                                    </optgroup>
+                                </optgroup>
                             </select>
                 
                             <button hidden type="submit" name="acceptDelCate" id="acceptDelCate">
                                 Quitar
                             </button>
                             <p id="msgWarnDelCate" hidden>
-                                Algunas categorias podrian quedar "sin categoria"
+                                Algunas noticias podrian quedar "sin categoria" (Descategorizados) al borrar su categoria.
                             </p>
                         </form>
                 </div>

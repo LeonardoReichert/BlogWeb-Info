@@ -50,14 +50,13 @@ class Comentario(models.Model):
     fecha = models.DateTimeField(auto_now=True);
 
 
+"""
 
-
-'''
-palabras = """
+palabras = '''
 zorro pierde el pelo, pero no las mañas, dice un refrán popular que, si lo adaptamos al capitán de la Selección argentina, Lionel Messi, sería “la pulga no pierde las mañas”. En las últimas horas se viralizó un video que muestra al crack rosarino haciendo una jugada en las inferiores de Newells muy parecida a la que hizo en el partido de los cuartos de final del Mundial de Qatar, contra Países Bajos, y que terminó en gol de Molina.
 
 El video en cuestión muestra dos secuencias en espejo. Una ocurrida cuando arrancaba el siglo y Messi solo tenía 12 años y la que ocurrió hace una semana en Doha.
-""".split()
+'''.split()
 
 from random import choice, randint;
 
@@ -75,15 +74,13 @@ def randomNoticia():
     parte1 = NoticiaParte.objects.create(noticia=noticia,
                     mensaje="".join([choice(palabras) for i in range(randint(30, 100))]),
                     urlImagen = "/media/n.png")
-    parte1.save()
-    noticia.save()
-    categoria.save()
+#    parte1.save()
+##    noticia.save()
+#    categoria.save()
 
 
-#for i in range(1300):
+#for i in range(100):
 #    randomNoticia()
 
-'''
-
-
+"""
 

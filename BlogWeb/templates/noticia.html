@@ -17,7 +17,11 @@
     <strong> Viendo: </strong> 
     <h2>{{noticiaTitulo}}</h2>
         {% if user.esAdmin %}
-            <a href="{% url 'crearnoticia'%}?modnoticia={{idNoticia}}"> Admin :: Editar esta noticia </a>
+            <a href="{% url 'crearnoticia'%}?modnoticia={{idNoticia}}">
+                <button type="button" class="btn btn-success">
+                    Admin: Editar esta noticia
+                </button>
+            </a>
         {% endif %}
     </center>
     <br>

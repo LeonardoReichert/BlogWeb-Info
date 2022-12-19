@@ -70,7 +70,7 @@ def _paginarResultados(resultados_consulta, pagina_actual, elementos_visibles):
         cantidad de elementos por vista
     
     devuelve:
-    los ids de la pagina
+    los ids de la pagina actual,
     pagina anterior, posterior, y maxima
              la pagina anterior o posterior tambien podria ser 0 para no avanzar
         la pagina minima siempre sera 1
@@ -95,26 +95,43 @@ def inicio(request):
 
     # - juntar info de noticias -
 
-#    totalNoticias = Noticia.objects.count();
-#    print("cantidad noticias: ", totalNoticias)
-
     noticiasVisibles = [];
 
     SHOW_MAX = 5; #noticias
     DESC_MAX = 200;
 
-    consulta = Noticia.objects.all().order_by("-fecha").values("id");
-    maxPagina = ceil(consulta.count() / SHOW_MAX);
+    filtroCategoriaNombre = request.GET.get("categoria", "")
+    if filtroCategoriaNombre:
+        #argumentos de filtro por categoria
+        if filtroCategoriaNombre.lower() == "null":
+            #noticias sin categorisar
+            categoria = None;
+        else:
+            #noticias con categoria existente
+            try:
+                categoria = Categorias.objects.get(nombre=filtroCategoriaNombre);
+            except:
+                #se puso una categoria inexistente, salir
+                return redirect("inicio");
 
-    #print(consulta.values("titulo"))
+        consulta = Noticia.objects.filter(categoria=categoria).order_by("-fecha").values("id");
+        filtroParam = "categoria="+filtroCategoriaNombre;
+    else:
+        # sin argumentos de filtro, filtrar entonces como "mas nuevos"
+        consulta = Noticia.objects.all().order_by("-fecha").values("id");
+        filtroParam = "";
+    
+    maxPagina = ceil(consulta.count() / SHOW_MAX);
     
     paginaActual = request.GET.get("pagina", "1");
     if not paginaActual.isdigit() or int(paginaActual) < 1 or int(paginaActual) > maxPagina:
-        return redirect("inicio");
-    paginaActual = int(paginaActual)
+        if maxPagina != 0:
+            #fuera de rango, pero puede haber 0 resultados validamente
+            return redirect("inicio");
+
+    paginaActual = int(paginaActual);
 
     ids, pAnterior, pSiguiente, pMaxima = _paginarResultados(consulta, paginaActual, SHOW_MAX);
-    
     
     for noticia in Noticia.objects.filter(id__in=ids):
         parte = NoticiaParte.objects.get(noticia=noticia);
@@ -134,12 +151,19 @@ def inicio(request):
         noticiasVisibles.append( (idNoticia, titulo, fecha, urlImg,
                                     categoria, descripcionCorta) );
 
+    
+    categorias = [c for c in Categorias.objects.all() if c.nombre != filtroCategoriaNombre]
+
     #parametros a la web template
     contexto = {"noticiasVisibles": noticiasVisibles,
                 "paginaActual": paginaActual,
                 "paginaAnterior": pAnterior,
                 "paginaSiguiente": pSiguiente,
                 "paginaMaxima": pMaxima,
+
+                "categoriaSeleccionada": filtroCategoriaNombre,
+                "categoriasExistentes": categorias,
+                "filtroParam": filtroParam,
                 };
 
     return render(request, "inicio.html", contexto);
