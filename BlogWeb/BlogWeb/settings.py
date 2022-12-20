@@ -57,7 +57,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "usuarios",
     "noticias",
+    "administrar",
+    "informacion",
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

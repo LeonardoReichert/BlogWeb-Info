@@ -49,8 +49,6 @@ class Comentario(models.Model):
     mensaje = models.CharField(max_length = Limits.mensajeComentario);
     fecha = models.DateTimeField(auto_now=True);
 
-"""
-
 palabras = '''
 zorro pierde el pelo, pero no las mañas, dice un refrán popular que, si lo adaptamos al capitán de la Selección argentina, Lionel Messi, sería “la pulga no pierde las mañas”. En las últimas horas se viralizó un video que muestra al crack rosarino haciendo una jugada en las inferiores de Newells muy parecida a la que hizo en el partido de los cuartos de final del Mundial de Qatar, contra Países Bajos, y que terminó en gol de Molina.
 
@@ -78,8 +76,7 @@ def randomNoticia():
 #    categoria.save()
 
 
-#for i in range(100):
+#for i in range(300):
 #    randomNoticia()
 
-"""
 

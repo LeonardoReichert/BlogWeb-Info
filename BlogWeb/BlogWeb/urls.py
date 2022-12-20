@@ -24,6 +24,8 @@ from django.conf.urls.static import static
 from noticias.views import *;
 from usuarios.views import Registro;
 from administrar.views import *;
+from informacion.views import *;
+
 
 from . import views
 
@@ -33,6 +35,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("inicio/", views.inicio),
     path("", views.inicio, name="inicio"),
+    path("informacion/", informeAcercaDe, name="acercade"),
+    path("contacto/", informeContacto, name="contacto"),
     path("login/", auth_view.LoginView.as_view(template_name="login.html"), name="login"),
     path("registro/", Registro.as_view(), name="registro"),
     path("logout/", auth_view.logout_then_login, name="logout"),

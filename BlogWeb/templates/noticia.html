@@ -44,7 +44,7 @@
     <center>
      <p>Categoria:
         <a href="{% url 'inicio' %}?categoria={{noticiaCategoria.nombre}}">
-            <span class="badge text-bg-success">{{noticiaCategoria.nombre}}</span>
+            <span class="badge text-bg-primary">{{noticiaCategoria.nombre}}</span>
         </a>
     </p>
     </center>
@@ -54,6 +54,9 @@
     </div>
     <br>
 
+
+
+    
 
     {% if user.username %}
     <!-- Usuario logeado puede comentar -->

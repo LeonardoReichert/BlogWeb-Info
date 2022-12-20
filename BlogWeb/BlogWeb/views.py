@@ -153,7 +153,7 @@ def inicio(request):
 
     
     categorias = [c for c in Categorias.objects.all() if c.nombre != filtroCategoriaNombre]
-    
+
     #parametros a la web template
     contexto = {"noticiasVisibles": noticiasVisibles,
                 "paginaActual": paginaActual,
