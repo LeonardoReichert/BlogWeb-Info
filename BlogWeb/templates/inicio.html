@@ -57,22 +57,22 @@
                 </ul>
         </div>
         
-    <div align="right">
-        {% if user.is_authenticated %}
-            <strong>Bienvenido {{user.username}}
-                <a href="{% url 'logout' %}">
-                    <button type="button" class="btn btn-danger">Cerrar sesion</button>
+        <div align="right">
+            {% if user.is_authenticated %}
+                <strong>Bienvenido {{user.username}}
+                    <a href="{% url 'logout' %}">
+                        <button type="button" class="btn btn-danger">Cerrar sesion</button>
+                    </a>
+                </strong>
+                
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <button type="button" class="btn btn-danger">Login</button>
                 </a>
-            </strong>
-            
-        {% else %}
-            <a href="{% url 'login' %}">
-                <button type="button" class="btn btn-danger">Login</button>
-            </a>
-            <a href="{% url 'registro' %}">
-                <button type="button" class="btn btn-danger">Registrarse</button>
-            </a>
-        {% endif %}
+                <a href="{% url 'registro' %}">
+                    <button type="button" class="btn btn-danger">Registrarse</button>
+                </a>
+            {% endif %}
         </div>
     </nav>
     </div>
