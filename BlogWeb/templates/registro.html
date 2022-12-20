@@ -13,15 +13,22 @@
     <div class="card-header">
         {% include 'includes/errores.html' %}
     
-    <br>
-    <center><h2>Registrarse</h2></center>
-    <br><br>
-        
-        <form method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn btn-info">Crear</button>
-        </form>
+        <br>
+        <center><h2>Registrarse</h2></center>
+        <br><br>
+                
+        <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-8">
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-info">Crear</button>
+            </form>
+
+        </div></div></div>
+
     </div>
 </div>
 
