@@ -13,6 +13,8 @@
 <div class="card">
     <div class="card-body">
     
+    
+    
     <center>
     <p> Viendo: </p>
     <h4>{{noticiaTitulo}}</h4>
@@ -43,9 +45,15 @@
 
     <center>
      <p>Categoria:
+        {% if noticiaCategoria %}
         <a href="{% url 'inicio' %}?categoria={{noticiaCategoria.nombre}}">
             <span class="badge text-bg-primary">{{noticiaCategoria.nombre}}</span>
         </a>
+        {% else %}
+        <a href="{% url 'inicio' %}?categoria=null">
+            <span class="badge text-bg-primary">Sin categoria</span>
+        </a>
+        {% endif %}
     </p>
     </center>
     </div>
@@ -107,6 +115,7 @@
         
     {% endfor %}
 
-    <br><br><br><br>
+    <br>
+    <br><br><br>
 
 {% endblock %}

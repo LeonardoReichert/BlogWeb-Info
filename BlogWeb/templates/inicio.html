@@ -24,28 +24,31 @@
 </head>
 
 <body>
+    <a name="arriba"></a>
+
     <div class="mx-auto" style="width: 1000px;" align="center">
         <h1>
         <img src="{% static 'img/bciudad.jpg' %}" alt="">
         <font color="#00A0C0">Fundacion Mi Bella Ciudad</font></h1>
         
 
-    <nav class="navbar navbar-expand-lg bg-light">
+    
+    <nav class="navbar navbar-expand-lg bg-info">
         <div class="container text-center" id="navbarNav">  
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/"><h4>Inicio</h4></a>
+                        <a class="nav-link text-white" aria-current="page" href="/"><h4>Inicio</h4></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'acercade' %}"><h4>Quienes somos</h4></a>
+                        <a class="nav-link text-white" href="{% url 'acercade' %}"><h4>Quienes somos</h4></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'contacto' %}"><h4>Contacto</h4></a>
+                        <a class="nav-link text-white" href="{% url 'contacto' %}"><h4>Contacto</h4></a>
                     </li>
                     {% if user.esAdmin %}
                         <li>
                             <a class="nav-link active" href="{% url 'administrar'%}">
-                                <font color="#00A000">
+                                <font color="#109010">
                                     <h4>Administrar</h4>
                                 </font>
                             </a>
@@ -57,17 +60,18 @@
         
     <div align="right">
         {% if user.is_authenticated %}
-            <p>Bienvenido {{user.username}}
+            <strong>Bienvenido {{user.username}}
                 <a href="{% url 'logout' %}">
-                    <button type="button" class="btn btn-info">Cerrar sesion</button>
-                </a></p>
+                    <button type="button" class="btn btn-danger">Cerrar sesion</button>
+                </a>
+            </strong>
             
-         {% else %}
+        {% else %}
             <a href="{% url 'login' %}">
-                <button type="button" class="btn btn-info">Login</button>
+                <button type="button" class="btn btn-danger">Login</button>
             </a>
             <a href="{% url 'registro' %}">
-                <button type="button" class="btn btn-info">Registrarse</button>
+                <button type="button" class="btn btn-danger">Registrarse</button>
             </a>
         {% endif %}
         </div>
@@ -78,9 +82,10 @@
     <div class="mx-auto" style="width: 1000px;">
 
     {% block general %}
+
         
         <!-- definir bloque noticias-->
-        
+            <br>
             <center><h3>Ultimas noticias</h3>
             {% if user.esAdmin %}
                 <br>
@@ -99,54 +104,49 @@
 
         {% include 'includes/paginador.html' %}
 
-        <div class="input-group mb-3">
-            <label  for="optFiltrar">Viendo por: </label>
-            <select id="optFiltrar" name="optFiltrar" onchange="seleccionarFiltro()">
-              {% if not categoriaSeleccionada %}
-                <option value="nuevos" selected>Mas nuevos</option>
-                <option value="categoria">Una categoria</option>
-              {% else %}
-                <option value="nuevos">Mas nuevos</option>
-                <option value="categoria" selected>Una categoria</option>
-              {% endif %}
-            </select>
-            
-            <!-- categorias: -->
-            
-            {% if categoriaSeleccionada %}
-            <select id="optsCategoriasFilter" onchange="filtrarCategoria()">
-            {% else %}
-            <select hidden id="optsCategoriasFilter" onchange="filtrarCategoria()">
-            {% endif %}
-                    
-                    {% if categoriaSeleccionada %}
-                        {% if categoriaSeleccionada != "null" %}
-                            <option value="{{categoriaSeleccionada}}"
-                                    selected>{{categoriaSeleccionada}}</option>
-                        {% endif %}
-                    {% else %}
-                        <option value="" selected>Seleccionar categoria</option>
-                    {% endif %}
-                    <optgroup label="Categorias existentes">
-                        {% for categoria in categoriasExistentes %}
-                            <option value="{{categoria.nombre}}">
-                                {{categoria.nombre}}
-                            </option>
-                        {% endfor %}
-                    </optgroup>
-                    <optgroup label="Otras">
-                        {% if categoriaSeleccionada == "null"%}
-                            <option selected value="null">Descategorizados</option>
-                        {% else %}
-                            <option value="null">Descategorizados</option>
-                        {% endif %}
-                    </optgroup>
-                    
-            </select>
-            
+        <!-- Filtros por fecha y categoria -->
 
-        </div>
         
+        <span class="badge rounded-pill text-bg-danger">
+            <a class="nav-link text-white" href="{% url 'inicio' %}">Mas Nuevos</a>
+                </span>
+        
+        
+        <label>Filtrar por categorias: </label>
+        {% for categoria in categoriasExistentes %}
+            {% if categoria.nombre == categoriaSeleccionada %}
+                <span class="badge rounded-pill text-bg-danger">
+                    <a class="nav-link text-white"
+                        href="{% url 'inicio' %}?categoria={{categoria.nombre}}">
+                        {{categoria.nombre}}</a>
+                </span>
+            {% else %}
+                <span class="badge rounded-pill text-bg-info">
+                    <a class="nav-link"
+                        href="{% url 'inicio' %}?categoria={{categoria.nombre}}">
+                        {{categoria.nombre}}</a>
+                </span>
+            {% endif %}
+        {% endfor %}
+
+        {% if noticiasVisibles %}
+            {% if categoriaSeleccionada == "null" %}
+                <span class="badge rounded-pill text-bg-danger">
+                    <a class="nav-link text-white" href="{% url 'inicio' %}?categoria=null">
+                        Sin categoria</a>
+                </span>
+            {% else %}
+                <span class="badge rounded-pill text-bg-info">
+                    <a class="nav-link" href="{% url 'inicio' %}?categoria=null">
+                        Sin categoria</a>
+                </span>
+            {%endif%}
+        {% endif %}
+
+        <br>
+        <br>
+        
+
         {% for idNoticia,titulo,fecha,urlImg,categoria,descripcionCorta in noticiasVisibles %}
             <!-- noticia : -->
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" align="left">
@@ -167,8 +167,9 @@
             <center><h3>No hay noticias.</h3></center>
         {% endfor %}
 
-
-    {% endblock %}
+    
+    
+    
 
     <!-- Paginador abajo -->
 
@@ -177,6 +178,10 @@
     {% endif %}
 
     <!-- paginacion terminada -->
+
+    {% endblock %}
+
+    <center><a href="#arriba">Volver arriba</a></center>
 
     <br>
     <br>
