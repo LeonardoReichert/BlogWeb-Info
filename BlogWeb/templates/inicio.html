@@ -31,7 +31,6 @@
         <img src="{% static 'img/bciudad.jpg' %}" alt="">
         <font color="#00A0C0">Fundacion Mi Bella Ciudad</font></h1>
         
-
     
     <nav class="navbar navbar-expand-lg bg-info">
         <div class="container text-center" id="navbarNav">  
@@ -48,7 +47,7 @@
                     {% if user.esAdmin %}
                         <li>
                             <a class="nav-link active" href="{% url 'administrar'%}">
-                                <font color="#109010">
+                                <font color="#108010">
                                     <h4>Administrar</h4>
                                 </font>
                             </a>
@@ -99,7 +98,6 @@
 
         <!--
             PAGINACION arriba
-
         -->
 
         {% include 'includes/paginador.html' %}
@@ -129,18 +127,16 @@
             {% endif %}
         {% endfor %}
 
-        {% if noticiasVisibles %}
-            {% if categoriaSeleccionada == "null" %}
+        {% if categoriaSeleccionada == "null" %}
                 <span class="badge rounded-pill text-bg-danger">
                     <a class="nav-link text-white" href="{% url 'inicio' %}?categoria=null">
                         Sin categoria</a>
                 </span>
-            {% else %}
+        {% else %}
                 <span class="badge rounded-pill text-bg-info">
                     <a class="nav-link" href="{% url 'inicio' %}?categoria=null">
                         Sin categoria</a>
                 </span>
-            {%endif%}
         {% endif %}
 
         <br>

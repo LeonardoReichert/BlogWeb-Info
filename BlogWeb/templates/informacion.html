@@ -2,6 +2,9 @@
 {% extends 'inicio.html' %}
 
 
+{% load static %}
+
+
 {% block titlepage %}
          - Quienes somos
 {% endblock%}
@@ -14,16 +17,24 @@
     <div class="card-body">
     
         {% block info %}
+
+        <br>
+        <center>
+        <img src="{% static 'img/cabecera_info.jpg'%}" width="550" height="400">
+        </center>
+
+        <br>
+        <br>
         <h1>    
             ¿Quienes somos?
         </h1> 
         <h4>
-
            <p> Un grupo de personas con un propósito común </p>
 
            <p> - Presidenta Marta Acosta </p>
         </h4>
 
+        <br>
         <h1>    
             Objetivo Social:
         </h1> 
@@ -32,7 +43,8 @@
             y adolescentes, adultos mayores, expuestos a las desigualdades que se presentan en la vida, 
             pero muy especialmente, cuando los derechos han sido amenazados, inobservados o vulnerados. </p>
         </h4>
-        
+
+        <br>
         <h1>    
             Principios de la Fundación:
         </h1> 
@@ -43,6 +55,7 @@
             mayores, cuyo cuidado han sido confiados a esta institución. </p>
         </h4>
         
+        <br>
         <h1>    
             Que hacemos:
         </h1> 
