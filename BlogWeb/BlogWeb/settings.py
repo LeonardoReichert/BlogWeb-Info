@@ -93,14 +93,15 @@ WSGI_APPLICATION = 'BlogWeb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 """
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}"""
-
+}
+"""
 
 def leerCredenciales():
 
@@ -123,7 +124,6 @@ def leerCredenciales():
 
     return credenciales
 
-
 credenciales = leerCredenciales()
 driverdb = credenciales.pop("driver", 'ODBC Driver 17 for SQL Server')
 
@@ -142,7 +142,6 @@ DATABASES = {
         },
     },
 }
-
 
 
 

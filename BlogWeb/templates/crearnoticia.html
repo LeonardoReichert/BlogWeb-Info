@@ -21,7 +21,7 @@
         {% endif %}
 
 
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" id="formCrearNoticia">
             {% csrf_token %}
 
 
@@ -41,7 +41,8 @@
             <!-- titulo -->
             <div align="left">
             <h5>Titulo:</5> <br>
-            <input type="text" name="titulo_noticia" maxlength="90" size="90" value="{{oldTitulo}}">
+            <input type="text" name="titulo_noticia" id="titulo_noticia"
+                                        maxlength="90" size="90" value="{{oldTitulo}}">
             </div>
             <br>
 
@@ -83,17 +84,18 @@
             </div>
             <br>
 
-            <center>
-                <button type="submit" class="btn btn-success">
-                    {% if not modnoticia %}
-                        Crear noticia
-                    {% else %}
-                        Guardar cambios en noticia
-                    {% endif %}
-                </button>
-            </center>
 
         </form>
+
+        <center>
+            <button onclick="confirmarCrearNoticia()" class="btn btn-success">
+                {% if not modnoticia %}
+                    Crear noticia
+                {% else %}
+                    Guardar cambios en noticia
+                {% endif %}
+            </button>
+        </center>
         
     </div>
     <br><br><br><br>
@@ -124,6 +126,32 @@
             let filenameImg = document.getElementById("img1").value;
             document.getElementById("showImg1").src = filenameImg;
             //alert("mostrar imagen " + filenameImg);
+        }
+
+        function confirmarCrearNoticia(){
+            /* esta funcion se ocupa de que los campos necesarios esten rellenados todos 
+            y si es asi, envia el formulario */
+            let formNoticia = document.getElementById("formCrearNoticia");
+            let img1 = document.getElementById("img1").value;
+            let showImg1 = document.getElementById("showImg1").src;
+            let titulo_noticia = document.getElementById("titulo_noticia").value;
+            let body1 = document.getElementById("body_part1").value;
+            let categoria = document.getElementById("categoria").value;
+            let nueva_categoria = document.getElementById("nueva_categoria").value;
+
+            if( (img1||showImg1) && titulo_noticia && body1 && ( (categoria&&categoria!="+") || 
+                                    ((categoria=="+") && nueva_categoria)) ){
+                formNoticia.submit();
+                }
+            else{
+                alert("Tienes entradas sin rellenar");
+            }
+
+            //
+            //alert(" cofnirmando ");
+            //.submit();
+
+
         }
     </script>
 

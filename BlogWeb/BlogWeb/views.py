@@ -114,11 +114,11 @@ def inicio(request):
                 #se puso una categoria inexistente, salir
                 return redirect("inicio");
 
-        consulta = Noticia.objects.filter(categoria=categoria).order_by("-fecha").values("id");
+        consulta = Noticia.objects.filter(categoria=categoria).order_by("-fecha");
         filtroParam = "categoria="+filtroCategoriaNombre;
     else:
         # sin argumentos de filtro, filtrar entonces como "mas nuevos"
-        consulta = Noticia.objects.all().order_by("-fecha").values("id");
+        consulta = Noticia.objects.all().order_by("-fecha");
         filtroParam = "";
     
     maxPagina = ceil(consulta.count() / SHOW_MAX);
@@ -131,9 +131,9 @@ def inicio(request):
 
     paginaActual = int(paginaActual);
 
-    ids, pAnterior, pSiguiente, pMaxima = _paginarResultados(consulta, paginaActual, SHOW_MAX);
-    
-    for noticia in Noticia.objects.filter(id__in=ids):
+    noticias,pAnterior,pSiguiente,pMaxima = _paginarResultados(consulta,paginaActual,SHOW_MAX);
+
+    for noticia in noticias:
         parte = NoticiaParte.objects.get(noticia=noticia);
 
         idNoticia = noticia.id;
@@ -153,7 +153,7 @@ def inicio(request):
 
     
     categorias = [c for c in Categorias.objects.all() if c.nombre != filtroCategoriaNombre]
-
+    
     #parametros a la web template
     contexto = {"noticiasVisibles": noticiasVisibles,
                 "paginaActual": paginaActual,

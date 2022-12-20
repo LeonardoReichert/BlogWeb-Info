@@ -195,7 +195,7 @@ def crearNoticia(request):
         #se recupera y carga los campos de la notica:
         
         try:
-            noticia = Noticia.objects.get(pk=idGetNoticia);
+            noticia = Noticia.objects.get(id=idGetNoticia);
 
             #se pidio borrar la noticia?
             if request.GET.get("delete", "") == "yes":

@@ -49,7 +49,6 @@ class Comentario(models.Model):
     mensaje = models.CharField(max_length = Limits.mensajeComentario);
     fecha = models.DateTimeField(auto_now=True);
 
-
 """
 
 palabras = '''

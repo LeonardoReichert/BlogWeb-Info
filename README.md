@@ -8,3 +8,5 @@ Este archivo es leido para la conexion a la base de datos
 
 
 Paola Arismendi
+Leonardo A. Reichert
+Julio Bonzi

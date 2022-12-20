@@ -16,3 +16,4 @@ credencialesDB.txt
 #y para volver a interesarse por trackear los cambios futuros:
 #git update-index --no-skip-worktree /BlogWeb/credencialesDB.txt
 
+*db.sqlite3
