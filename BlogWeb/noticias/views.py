@@ -57,6 +57,7 @@ def verNoticia(request):
     
     if noticia:
         contexto["idNoticia"] = noticia.id;
+        contexto["noticiaFecha"] = horaUtcToArg(noticia.fecha);
         contexto["noticiaTitulo"] = noticia.titulo;
         contexto["noticiaCategoria"] = noticia.categoria;
 

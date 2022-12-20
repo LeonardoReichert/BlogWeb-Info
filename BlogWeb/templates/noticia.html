@@ -14,8 +14,8 @@
     <div class="card-body">
     
     <center>
-    <strong> Viendo: </strong> 
-    <h2>{{noticiaTitulo}}</h2>
+    <p> Viendo: </p>
+    <h4>{{noticiaTitulo}}</h4>
         {% if user.esAdmin %}
             <a href="{% url 'crearnoticia'%}?modnoticia={{idNoticia}}">
                 <button type="button" class="btn btn-success">
@@ -31,10 +31,28 @@
     </center>
     <br>
 
+    <center>
+        <h2>{{noticiaTitulo}}</h2>
+        <p> {{noticiaFecha}} </p>
+    </center>
+    <br>
+
     <font size="5" face="Arial">
         <p class="text-break">{{cuerpoNoticia|linebreaks}}</p>
     </font>
-    </div></div>
+
+    <center>
+     <p>Categoria:
+        <a href="{% url 'inicio' %}?categoria={{noticiaCategoria.nombre}}">
+            <span class="badge text-bg-success">{{noticiaCategoria.nombre}}</span>
+        </a>
+    </p>
+    </center>
+    </div>
+        
+
+    </div>
+    <br>
 
 
     {% if user.username %}
