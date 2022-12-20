@@ -82,6 +82,15 @@ def verNoticia(request):
 
 
 
+def removeprefix(cadena, prefix):
+    """ str.removeprefix aparece en python 3.9  """
+
+    if cadena.startswith(prefix):
+
+        return cadena[len(prefix):]
+    return cadena;
+
+
 
 def crearNoticia(request):
     """ Crea o modifica  o borra noticia """
@@ -90,6 +99,7 @@ def crearNoticia(request):
 
     if not hasattr(request.user, "esAdmin") or not request.user.esAdmin:
         #si no es admin, no tendria los permisos para usar esta funcion
+        print("no admin")
         return redirect("inicio");
 
     idPostNoticia = request.POST.get("modnoticia", "");
@@ -106,6 +116,7 @@ def crearNoticia(request):
         mensajePost1 = request.POST.get("body_part1", "");
         if not mensajePost1:
             #dar error, el cuerpo de la noticia esta vacio
+            print("no mensaje post")
             return redirect( "crearnoticia" );
         
         mensajePost1 = mensajePost1[:Limits.mensajeNoticia];
@@ -116,6 +127,7 @@ def crearNoticia(request):
 
         if not idCategoria:
             #no se selecciono ninguna categoria, error
+            print("No id de categoria")
             return redirect( "crearnoticia" );
 
         elif idCategoria == "+":
@@ -135,6 +147,7 @@ def crearNoticia(request):
 
         if not categoria:
             #dar error, no se creo una categoria
+            print("No se creo una categoria")
             return redirect( "crearnoticia" );
 
         tituloPost = tituloPost[:Limits.tituloNoticia]; #200 length max
@@ -153,6 +166,7 @@ def crearNoticia(request):
 
             if not imgPost1:
                 #dar error, no se puso imagen en una nueva noticia
+                print("no se puso iagen a la nueva noticia")
                 return redirect( "crearnoticia" );
 
             noticia = Noticia.objects.create(titulo=tituloPost,
@@ -174,7 +188,7 @@ def crearNoticia(request):
             if imgPost1:
                 #se cambia de imagen porque se eligio otra imagen
                 
-                oldPathImg = parte1.urlImagen.removeprefix("/");
+                oldPathImg = removeprefix(parte1.urlImagen, "/");
                 if exists(oldPathImg):
                     #se intenta borrar la antigua imagen, para no ocupar espacio ya que no se ocupara mas
                     try:
@@ -187,7 +201,8 @@ def crearNoticia(request):
             parte1.save();
             noticia.save();
 
-        #print("post", request.POST)        
+        #print("post", request.POST)
+        print("succes post")
         return redirect("/noticia/?id="+str(idPostNoticia))
 
     elif idGetNoticia:
@@ -199,9 +214,11 @@ def crearNoticia(request):
             noticia = Noticia.objects.get(id=idGetNoticia);
 
             #se pidio borrar la noticia?
-            if request.GET.get("delete", "") == "yes":
+            deleter = request.GET.get("delete", "");
+            print("deleter", str(deleter), deleter, len(deleter), type(deleter))
+            if str(deleter).upper() == "YES":
                 #pues se borra y se redirecciona al inicio:
-                pathImg = NoticiaParte.objects.get(noticia=noticia).urlImagen.removeprefix("/");
+                pathImg = removeprefix(NoticiaParte.objects.get(noticia=noticia).urlImagen, "/");
                 if exists(pathImg):
                     #se intenta borra la imagen que ya no se usara:
                     try:
@@ -209,7 +226,10 @@ def crearNoticia(request):
                     except:
                         pass;
                 noticia.delete();
+                print("se borro la noticia?")
                 return redirect("inicio" );
+            else:
+                print("es falso %s" % deleter, deleter=="yes")
             
             tituloNoticia = noticia.titulo;
             categoria = noticia.categoria;
@@ -219,7 +239,9 @@ def crearNoticia(request):
             #por ahora las noticias se limitaran a un solo cuerpo o parte
             cuerpoNoticia = partes[0].mensaje;
             pathImgNoticia = partes[0].urlImagen;
-        except:
+            print("se modifico la noticia?")
+        except Exception as msg:
+            print("real problema", str(msg))
             #si algun campo falla se reinician todos
             idGetNoticia = ""
         
