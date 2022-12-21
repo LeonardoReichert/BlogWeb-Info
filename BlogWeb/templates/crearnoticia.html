@@ -19,19 +19,17 @@
         </button>
         <br><br><br>
         {% endif %}
-
+        
+        <img src="{{oldPathImg}}" id="showImg1" name="showImg1"  style="max-width: 750px" >
 
         <form method="post" enctype="multipart/form-data" id="formCrearNoticia">
             {% csrf_token %}
-
 
             <!-- campo donde se guarda la id de noticia modificando -->
             <input type="hidden" name="modnoticia" id="modnoticia" value="{{modnoticia}}">
 
             <!-- imagen -->
-            <img src="{{oldPathImg}}" id="showImg1" name="showImg1"  style="max-width: 750px" >
-            <br>
-
+            
             <label>Elegir imagen:
                 <input type="file" onchange="mostrarImagen()" name="img1" id="img1"
                         accept="image/png, image/gif, image/jpeg"/>
@@ -123,8 +121,9 @@
         }
 
         function mostrarImagen(){
-            let filenameImg = document.getElementById("img1").value;
-            document.getElementById("showImg1").src = filenameImg;
+            //resetea imagen mas bien dicho
+            //let filenameImg = document.getElementById("img1").value;
+            document.getElementById("showImg1").src = "";
             //alert("mostrar imagen " + filenameImg);
         }
 
@@ -133,16 +132,13 @@
             y si es asi, envia el formulario */
             let formNoticia = document.getElementById("formCrearNoticia");
             let img1 = document.getElementById("img1").value;
-            let showImg1 = document.getElementById("showImg1").src;
+            let showImg1 = document.getElementById("showImg1").getAttribute("src");
             let titulo_noticia = document.getElementById("titulo_noticia").value;
             let body1 = document.getElementById("body_part1").value;
             let categoria = document.getElementById("categoria").value;
             let nueva_categoria = document.getElementById("nueva_categoria").value;
             
-            //alert(""+ img1);
-            //alert(""+ showImg1);
-
-
+            
             if( (img1||showImg1) && titulo_noticia && body1 && ( (categoria&&categoria!="+") || 
                                     ((categoria=="+") && nueva_categoria)) ){
                 formNoticia.submit();

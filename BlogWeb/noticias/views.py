@@ -5,7 +5,6 @@ from django.urls import reverse
 
 from django.http import HttpResponseRedirect
 
-
 #from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
