@@ -24,12 +24,16 @@ fstorage = FileSystemStorage();
 
 def publicarComentario(request):
 
+    if not request.user.is_authenticated:
+        #backend, usuario no esta autenticado, cancelar.
+        return False
+
     noticia = Noticia.objects.get(id=request.POST["idNoticiaComentario"])
     
     msgComentario = request.POST["msgComentario"];
     if msgComentario.strip() == "":
         #el comentario solo es contenido vacio.
-        return;
+        return False;
         
     comentario = Comentario.objects.create(noticia=noticia,
                                             autor=request.user,
@@ -37,6 +41,7 @@ def publicarComentario(request):
     comentario.save()
 
     #return comentario.id;
+    return True;
 
 
 
@@ -114,7 +119,6 @@ def crearNoticia(request):
         mensajePost1 = request.POST.get("body_part1", "");
         if not mensajePost1:
             #dar error, el cuerpo de la noticia esta vacio
-            print("no mensaje post")
             return redirect( "crearnoticia" );
         
         mensajePost1 = mensajePost1[:Limits.mensajeNoticia];
