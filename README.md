@@ -1,9 +1,6 @@
 # BlogWeb-Info
 Informatorio, proyecto Web Blog comision 3 grupo 9
 
-Video demostración:
-===================
-https://www.youtube.com/watch?v=EpZW0fv41nw
 
 
 Configurar Base de datos
